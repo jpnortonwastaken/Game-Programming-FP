@@ -6,11 +6,10 @@ public class MouseLook : MonoBehaviour
 {
     // Start is called before the first frame update
     public Transform playerBody;
-    public float mouseSensitivity;
+    public float mouseSensitivity = 250;
     float yaw = 0;
     float pitch = 0;
-    public float distance = GameObject.FindObjectOfType<Camera>().transform.position.z;
-
+    public float distance = 8;
 
     void Start()
     {

@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask groundLayer;
     bool grounded;
 
-    public Transform orientation; // put player orientation
+    Transform orientation;
     float horizontalInput;
     float verticalInput;
     private float jumpTimeCounter;
@@ -38,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         readyToJump = true;
+        orientation = gameObject.transform;
         //jumpTimeCounter = maxJumpHoldTime;
     }
 

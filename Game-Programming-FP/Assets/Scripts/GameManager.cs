@@ -8,18 +8,20 @@ public class GameManager : MonoBehaviour
 {
     private bool gameEnded = false;
     public Text gameText;
+     public Button replayButton;
     void Start(){
         gameText.gameObject.SetActive(false);
+        replayButton.gameObject.SetActive(false);
+        replayButton.onClick.AddListener(ReplayGame);
     }
     public void WinGame()
     {
         if (!gameEnded)
         {
             gameEnded = true;
-            Debug.Log("You Win!");
-            // Add your win logic here, such as loading a win scene or showing a win UI
-            // For demonstration, we'll just reload the current scene
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            gameText.text = "You Win!";
+            gameText.gameObject.SetActive(true);
+            replayButton.gameObject.SetActive(true);
         }
     }
 
@@ -28,12 +30,14 @@ public class GameManager : MonoBehaviour
         if (!gameEnded)
         {
             gameEnded = true;
-            gameText.text = "You Win!";
+            gameText.text = "You Lose!";
             gameText.gameObject.SetActive(true);
-            // Add your lose logic here, such as loading a lose scene or showing a lose UI
-            // For demonstration, we'll just reload the current scene
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            replayButton.gameObject.SetActive(true);
         }
+    }
+    public void ReplayGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); /
     }
 }
 

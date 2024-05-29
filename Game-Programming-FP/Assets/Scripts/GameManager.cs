@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour
     public Text gameText;
      public Button replayButton;
     void Start(){
-<<<<<<< HEAD
         replayButton.onClick.AddListener(ReplayGame);
         gameText.gameObject.SetActive(false);
         replayButton.gameObject.SetActive(false);
@@ -29,24 +28,13 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
     }
 
-=======
-        gameText.gameObject.SetActive(false);
-        replayButton.gameObject.SetActive(false);
-        replayButton.onClick.AddListener(ReplayGame);
-    }
->>>>>>> main
     public void WinGame()
     {
         if (!gameEnded)
         {
             gameEnded = true;
             gameText.text = "You Win!";
-<<<<<<< HEAD
             ShowScreen();
-=======
-            gameText.gameObject.SetActive(true);
-            replayButton.gameObject.SetActive(true);
->>>>>>> main
         }
     }
 
@@ -56,21 +44,12 @@ public class GameManager : MonoBehaviour
         {
             gameEnded = true;
             gameText.text = "You Lose!";
-<<<<<<< HEAD
             ShowScreen();
-=======
-            gameText.gameObject.SetActive(true);
-            replayButton.gameObject.SetActive(true);
->>>>>>> main
         }
     }
     public void ReplayGame()
     {
-<<<<<<< HEAD
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-=======
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); /
->>>>>>> main
     }
 }
 

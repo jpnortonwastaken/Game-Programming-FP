@@ -6,11 +6,10 @@ public class MouseLook : MonoBehaviour
 {
     // Start is called before the first frame update
     public Transform playerBody;
-    public float mouseSensitivity;
+    public float mouseSensitivity = 250;
     float yaw = 0;
     float pitch = 0;
     public float distance = 8;
-
 
     void Start()
     {
@@ -36,7 +35,7 @@ public class MouseLook : MonoBehaviour
         //direction vector
         Vector3 direction = new Vector3(0, 0, -distance);
 
-        pitch = Mathf.Clamp(pitch, -90f, 90f);
+        pitch = Mathf.Clamp(pitch, -89.9f, 89.9f);
         Quaternion rotation = Quaternion.Euler(pitch, yaw, 0);
         transform.position = playerBody.position + rotation * direction;
 

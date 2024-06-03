@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class EnemyBehavior : MonoBehaviour
 {
-    public static bool hitEnemy = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,7 +14,7 @@ public class EnemyBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        hitEnemy = false;
+
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -29,7 +28,7 @@ public class EnemyBehavior : MonoBehaviour
         }
         else if (other.CompareTag("Attack"))
         {
-            hitEnemy = true;
+            PlayerAttack.KnockBack();
             Destroy(gameObject);
 
         }

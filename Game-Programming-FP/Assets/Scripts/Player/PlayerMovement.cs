@@ -65,13 +65,14 @@ public class PlayerMovement : MonoBehaviour
 
 
         // when to jump
-        if(Input.GetKeyDown(jumpKey) && readyToJump && grounded)
+        if(Input.GetKey(jumpKey) && readyToJump && grounded)
         {
             readyToJump = false;
             Jump();
             Invoke(nameof(ResetJump), jumpCooldown);
         }
 
+        // double jump
         if(Input.GetKeyDown(jumpKey) && readyToJump && !grounded && doubleJump && doubleJumpEnable)
         {
             readyToJump = false;

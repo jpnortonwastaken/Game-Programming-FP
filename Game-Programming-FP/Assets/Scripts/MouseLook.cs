@@ -27,7 +27,6 @@ public class MouseLook : MonoBehaviour
 
         //yaw
         yaw += moveX;
-        playerBody.Rotate(Vector3.up * moveX); //this should move player body
 
         //pitch
         pitch -= moveY;
@@ -38,6 +37,7 @@ public class MouseLook : MonoBehaviour
         pitch = Mathf.Clamp(pitch, -89.99f, 89.99f);
         Quaternion rotation = Quaternion.Euler(pitch, yaw, 0);
         transform.position = playerBody.position + rotation * direction;
+        playerBody.rotation = Quaternion.Euler(0, yaw, 0); 
 
         transform.LookAt(playerBody.position);
     }

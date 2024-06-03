@@ -35,7 +35,7 @@ public class MouseLook : MonoBehaviour
         //direction vector
         Vector3 direction = new Vector3(0, 0, -distance);
 
-        pitch = Mathf.Clamp(pitch, -89.9f, 89.9f);
+        pitch = Mathf.Clamp(pitch, -89.99f, 89.99f);
         Quaternion rotation = Quaternion.Euler(pitch, yaw, 0);
         transform.position = playerBody.position + rotation * direction;
 

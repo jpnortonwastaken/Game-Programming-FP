@@ -13,9 +13,6 @@ public class PlayerMovement : MonoBehaviour
     public bool doubleJumpEnable;
     bool doubleJump;
 
-    [HideInInspector] public float walkSpeed;
-    [HideInInspector] public float sprintSpeed;
-
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
 
@@ -43,14 +40,22 @@ public class PlayerMovement : MonoBehaviour
     {
         // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, groundLayer);
-
-        PlayerInput();
-
+        if (GameManager.gameEnded == false)
+        {
+            PlayerInput();
+        }
+        else 
+        {
+            rb.velocity = new Vector3(0,0,0);
+        }
     }
 
     private void FixedUpdate()
     {
-        MovePlayer();
+        if (GameManager.gameEnded == false)
+        {
+            MovePlayer();
+        }
     }
 
     private void PlayerInput()

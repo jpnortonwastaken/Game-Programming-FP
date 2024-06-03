@@ -6,10 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private bool gameEnded = false;
+    public static bool gameEnded = false;
     public Text gameText;
      public Button replayButton;
     void Start(){
+        gameEnded = false;
         replayButton.onClick.AddListener(ReplayGame);
         gameText.gameObject.SetActive(false);
         replayButton.gameObject.SetActive(false);

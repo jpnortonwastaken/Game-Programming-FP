@@ -6,12 +6,11 @@ using TMPro;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
-    public float moveSpeed = 7f;
-    public float groundDrag = 5f;
+    public float moveSpeed = 10f;
     public float jumpForce = 8f;
     public float jumpCooldown = 0.25f;
-    public float airMultiplier = 0.4f;
     bool readyToJump;
+    public bool doubleJumpEnable;
     bool doubleJump;
 
     [HideInInspector] public float walkSpeed;
@@ -46,13 +45,7 @@ public class PlayerMovement : MonoBehaviour
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, groundLayer);
 
         PlayerInput();
-        SpeedControl();
 
-        // handle drag
-        if (grounded)
-            rb.drag = groundDrag;
-        else
-            rb.drag = 0;
     }
 
     private void FixedUpdate()
@@ -65,6 +58,7 @@ public class PlayerMovement : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
+
         // when to jump
         if(Input.GetKeyDown(jumpKey) && readyToJump && grounded)
         {
@@ -73,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
             Invoke(nameof(ResetJump), jumpCooldown);
         }
 
-        if(Input.GetKeyDown(jumpKey) && readyToJump && !grounded && doubleJump)
+        if(Input.GetKeyDown(jumpKey) && readyToJump && !grounded && doubleJump && doubleJumpEnable)
         {
             readyToJump = false;
             doubleJump = false;
@@ -98,25 +92,9 @@ public class PlayerMovement : MonoBehaviour
         // calculate movement direction
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
-        // on ground
-        if(grounded)
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+        rb.AddForce(moveDirection.normalized * moveSpeed * 40f, ForceMode.Force);
 
-        // in air
-        else if(!grounded)
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
-    }
-
-    private void SpeedControl()
-    {
-        Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-
-        // limit velocity if needed
-        if(flatVel.magnitude > moveSpeed)
-        {
-            Vector3 limitedVel = flatVel.normalized * moveSpeed;
-            rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
-        }
+        rb.velocity = new Vector3(0f, rb.velocity.y, 0f);
     }
 
     private void Jump()

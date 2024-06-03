@@ -1,19 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
+using Quaternion = UnityEngine.Quaternion;
 
 public class MouseLook : MonoBehaviour
 {
     // Start is called before the first frame update
     public Transform playerBody;
-    public float mouseSensitivity = 250;
-    float yaw = 0;
-    float pitch = 0;
-    public float distance = 8;
+
 
     void Start()
     {
-        playerBody = transform.parent.transform;
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -22,26 +20,8 @@ public class MouseLook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.gameEnded == false)
-        {
-        float moveX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float moveY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
-
-        //yaw
-        yaw += moveX;
-
-        //pitch
-        pitch -= moveY;
-
-        //direction vector
-        Vector3 direction = new Vector3(0, 0, -distance);
-
-        pitch = Mathf.Clamp(pitch, -89.99f, 89.99f);
-        Quaternion rotation = Quaternion.Euler(pitch, yaw, 0);
-        transform.position = playerBody.position + rotation * direction;
-        playerBody.rotation = Quaternion.Euler(0, yaw, 0); 
-
-        transform.LookAt(playerBody.position);
-        }
+        float cameraYaw = Camera.main.transform.eulerAngles.y;
+        Quaternion newRotation = Quaternion.Euler(0f, cameraYaw, 0f);
+        playerBody.transform.rotation = Quaternion.Lerp(playerBody.transform.rotation, newRotation, Time.deltaTime * 100);
     }
 }

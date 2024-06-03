@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    public static bool hitEnemy = false;
+
     public float knockback = 5;
+    public GameObject slashEffect;
 
     // Start is called before the first frame update
     void Start()
@@ -20,22 +21,35 @@ public class PlayerAttack : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
         {
             HitEnemy();
-            Rigidbody rb = gameObject.GetComponent<Rigidbody>();
-            if (PlayerMovement.grounded)
-            {
-                rb.AddForce(-1 * Camera.main.transform.forward * knockback, ForceMode.Impulse);
-            }
+            KnockBack();
+
         }
 
     }
 
     void HitEnemy()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, Mathf.Infinity) 
-            && hit.collider.CompareTag("Enemy"))
+        GameObject attack = Instantiate(slashEffect, transform.position + transform.forward, transform.rotation)
+                as GameObject;
+        attack.transform.SetParent(gameObject.transform);
+
+    }
+
+    void KnockBack()
+    {
+        Rigidbody rb = gameObject.GetComponent<Rigidbody>();
+        if (EnemyBehavior.hitEnemy && !PlayerMovement.grounded)
         {
-            hitEnemy = true;
+            knockback = 6;
         }
+        else if (EnemyBehavior.hitEnemy)
+        {
+            knockback = 5;
+        }
+        else
+        {
+            knockback = 0;
+        }
+        rb.AddForce(-1 * Camera.main.transform.forward * knockback, ForceMode.Impulse);
     }
 }

@@ -6,33 +6,37 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+     public bool finalGame;
+     public string nextLevel;
     private bool gameEnded = false;
-    public string nextLevel;
-    public bool finalGame;
     public Text gameText;
-    public Button replayButton;
+     public Button replayButton;
     void Start(){
+        replayButton.onClick.AddListener(ReplayGame);
         gameText.gameObject.SetActive(false);
         replayButton.gameObject.SetActive(false);
-        replayButton.onClick.AddListener(ReplayGame);
     }
+
+    void Update() {
+        if (GameObject.FindGameObjectWithTag("Player").transform.position.y < -5) {
+            LoseGame();
+        }
+    }
+
+    public void ShowScreen() {
+        gameText.gameObject.SetActive(true);
+        replayButton.gameObject.SetActive(true);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
     public void WinGame()
     {
         if (!gameEnded)
         {
             gameEnded = true;
             gameText.text = "You Win!";
-<<<<<<< Updated upstream
-            gameText.gameObject.SetActive(true);
-            replayButton.gameObject.SetActive(true);
-=======
-            ShowScreen();
-            if(!finalGame){
-                LoadNextLevel();
-            }else{
-                //final level screen
-            }
->>>>>>> Stashed changes
+            LoadNextLevel();
         }
     }
 
@@ -42,18 +46,19 @@ public class GameManager : MonoBehaviour
         {
             gameEnded = true;
             gameText.text = "You Lose!";
-            gameText.gameObject.SetActive(true);
-            replayButton.gameObject.SetActive(true);
+            ShowScreen();
         }
     }
     public void ReplayGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); /
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     void LoadNextLevel(){
         if(!finalGame){
             SceneManager.LoadScene(nextLevel);
-        }  
+        }else{
+            //load final screen or final message?
+        }
     }
 }
 

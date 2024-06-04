@@ -10,6 +10,7 @@ public class PlayerAttack : MonoBehaviour
     public static float knockback = 10;
     public GameObject slashEffect;
     public float attackCooldown = 1;
+    public AudioClip hitSFX;
 
     // Start is called before the first frame update
     void Start()
@@ -36,7 +37,7 @@ public class PlayerAttack : MonoBehaviour
             transform.position + Camera.main.transform.forward, Camera.main.transform.rotation)
                 as GameObject;
         attack.transform.SetParent(gameObject.transform);
-
+        AudioSource.PlayClipAtPoint(hitSFX, transform.position);
     }
 
     public static void KnockBack()

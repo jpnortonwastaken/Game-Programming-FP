@@ -10,12 +10,14 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce = 8f;
     public float jumpCooldown = 0.25f;
     public float dashCooldown = 0.25f;
+     public float dashForce = 20f;
     bool readyToJump;
     public bool doubleJumpEnable;
     bool doubleJump;
     public bool dashEnable;
     bool readyToDash;
     bool dash;
+    bool notDashing;
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
@@ -59,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (GameManager.gameEnded == false)
+        if (GameManager.gameEnded == false && readyToDash && !EnemyBehavior.isKnockBacked)
         {
             MovePlayer();
         }
@@ -72,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
 
 
         // when to jump
-        if(Input.GetKey(jumpKey) && readyToJump && grounded)
+        if(Input.GetKey(jumpKey) && readyToJump && grounded && dashEnable && !EnemyBehavior.isKnockBacked)
         {
             readyToJump = false;
             Jump();
@@ -80,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // double jump
-        if(Input.GetKeyDown(jumpKey) && readyToJump && !grounded && doubleJump && doubleJumpEnable)
+        if(Input.GetKeyDown(jumpKey) && readyToJump && !grounded && doubleJump && doubleJumpEnable && dashEnable && !EnemyBehavior.isKnockBacked)
         {
             readyToJump = false;
             doubleJump = false;
@@ -89,12 +91,12 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // dash
-        if(Input.GetKeyDown(shiftKey) && readyToDash && dash && dashEnable) 
+        if(Input.GetKeyDown(shiftKey) && readyToDash && dash && dashEnable && !EnemyBehavior.isKnockBacked) 
         {
             readyToDash = false;
             dash = false;
             Dash();
-            Invoke(nameof(ResetDash), jumpCooldown);
+            Invoke(nameof(ResetDash), dashCooldown);
         }
 
         if(grounded)
@@ -130,7 +132,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Dash()
     {
-        rb.AddForce(Camera.main.transform.forward * jumpForce, ForceMode.Impulse);
+        rb.velocity = new Vector3(0f, 0f, 0f);    
+        rb.AddForce(Camera.main.transform.forward * dashForce, ForceMode.Impulse);
     }
 
     private void ResetJump()
@@ -140,6 +143,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void ResetDash()
     {
-        readyToDash = true;
+        readyToDash = true;  
+        rb.velocity = new Vector3(0f, 0f, 0f);
     }
 }

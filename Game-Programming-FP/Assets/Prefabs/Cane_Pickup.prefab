@@ -93,8 +93,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1372348775171743733}
   - component: {fileID: 6617696911556157292}
+  - component: {fileID: -1647254258454065036}
   m_Layer: 0
-  m_Name: Cane
+  m_Name: Cane_Pickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -138,6 +139,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.28, y: 1, z: 0.3}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-1647254258454065036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4582420955934213245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83e63c1dde5e642289851323bd83012d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6263943660826427506
 GameObject:
   m_ObjectHideFlags: 0

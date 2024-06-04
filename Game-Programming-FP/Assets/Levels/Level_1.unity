@@ -3723,7 +3723,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   finalGame: 0
-  nextLevel: Level_2
+  nextLevel: 
   gameText: {fileID: 161514514}
   replayButton: {fileID: 257541543}
 --- !u!4 &1721153968
@@ -4690,15 +4690,9 @@ MonoBehaviour:
   jumpForce: 7
   jumpCooldown: 0.25
   dashCooldown: 0.25
-<<<<<<< main
   dashForce: 20
   doubleJumpEnable: 1
   dashEnable: 1
-=======
-  dashForce: 20
-  doubleJumpEnable: 1
-  dashEnable: 1
->>>>>>> Chris
   jumpKey: 32
   shiftKey: 304
   playerHeight: 2
@@ -4744,9 +4738,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b473bee9d0b30f446aec0ddfface2b93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  readyToAttack: 0
   slashEffect: {fileID: 5297731924890474422, guid: 3186667abc670c547ab2eceb8de30245, type: 3}
-  attackCooldown: 1
 --- !u!1001 &1998383916
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -6,17 +6,12 @@ using TMPro;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
-    public float moveSpeed = 7f;
-    public float groundDrag = 5f;
+    public float moveSpeed = 10f;
     public float jumpForce = 8f;
     public float jumpCooldown = 0.25f;
-    public float airMultiplier = 0.4f;
-    //public float holdJumpMultiplier = 1.5f;
-    //public float maxJumpHoldTime = 0.2f;
     bool readyToJump;
-
-    [HideInInspector] public float walkSpeed;
-    [HideInInspector] public float sprintSpeed;
+    public bool doubleJumpEnable;
+    bool doubleJump;
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
@@ -29,7 +24,6 @@ public class PlayerMovement : MonoBehaviour
     Transform orientation;
     float horizontalInput;
     float verticalInput;
-    private float jumpTimeCounter;
     Vector3 moveDirection;
     Rigidbody rb;
 
@@ -38,42 +32,64 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         readyToJump = true;
+        doubleJump = true;
         orientation = gameObject.transform;
-        //jumpTimeCounter = maxJumpHoldTime;
     }
 
     private void Update()
     {
         // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, groundLayer);
-
-        MyInput();
-        SpeedControl();
-
-        // handle drag
-        if (grounded)
-            rb.drag = groundDrag;
-        else
-            rb.drag = 0;
+        if (GameManager.gameEnded == false)
+        {
+            PlayerInput();
+        }
+        else 
+        {
+            rb.velocity = new Vector3(0,0,0);
+        }
     }
 
     private void FixedUpdate()
     {
-        MovePlayer();
+        if (GameManager.gameEnded == false)
+        {
+            MovePlayer();
+        }
     }
 
-    private void MyInput()
+    private void PlayerInput()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
+
 
         // when to jump
         if(Input.GetKey(jumpKey) && readyToJump && grounded)
         {
             readyToJump = false;
-            //jumpTimeCounter = maxJumpHoldTime;
             Jump();
             Invoke(nameof(ResetJump), jumpCooldown);
+        }
+
+        // double jump
+        if(Input.GetKeyDown(jumpKey) && readyToJump && !grounded && doubleJump && doubleJumpEnable)
+        {
+            readyToJump = false;
+            doubleJump = false;
+            Jump();
+            Invoke(nameof(ResetJump), jumpCooldown);
+        }
+
+        if(grounded)
+        {
+            doubleJump = true;
+        }
+
+        // variable height
+        if(Input.GetKeyUp(jumpKey) && rb.velocity.y > 3f)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, 2f, rb.velocity.z);
         }
     }
 
@@ -82,30 +98,13 @@ public class PlayerMovement : MonoBehaviour
         // calculate movement direction
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
-        // on ground
-        if(grounded)
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+        rb.AddForce(moveDirection.normalized * moveSpeed * 40f, ForceMode.Force);
 
-        // in air
-        else if(!grounded)
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
-    }
-
-    private void SpeedControl()
-    {
-        Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-
-        // limit velocity if needed
-        if(flatVel.magnitude > moveSpeed)
-        {
-            Vector3 limitedVel = flatVel.normalized * moveSpeed;
-            rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
-        }
+        rb.velocity = new Vector3(0f, rb.velocity.y, 0f);
     }
 
     private void Jump()
     {
-        // reset y velocity
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }

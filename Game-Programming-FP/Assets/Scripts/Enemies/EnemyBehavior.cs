@@ -14,7 +14,7 @@ public class EnemyBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -25,6 +25,12 @@ public class EnemyBehavior : MonoBehaviour
             {
                 gameManager.LoseGame();
             }
+        }
+        else if (other.CompareTag("Attack"))
+        {
+            PlayerAttack.KnockBack();
+            Destroy(gameObject);
+
         }
     }
 }

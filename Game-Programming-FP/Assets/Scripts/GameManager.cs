@@ -6,10 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private bool gameEnded = false;
+    public bool finalGame;
+    public string nextLevel;
+    public static bool gameEnded = false;
     public Text gameText;
-     public Button replayButton;
+    public Button replayButton;
     void Start(){
+       gameEnded = false;
         replayButton.onClick.AddListener(ReplayGame);
         gameText.gameObject.SetActive(false);
         replayButton.gameObject.SetActive(false);
@@ -34,7 +37,7 @@ public class GameManager : MonoBehaviour
         {
             gameEnded = true;
             gameText.text = "You Win!";
-            ShowScreen();
+            LoadNextLevel();
         }
     }
 
@@ -50,6 +53,13 @@ public class GameManager : MonoBehaviour
     public void ReplayGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    void LoadNextLevel(){
+        if(!finalGame){
+            SceneManager.LoadScene(nextLevel);
+        }else{
+            //load final screen or final message?
+        }
     }
 }
 

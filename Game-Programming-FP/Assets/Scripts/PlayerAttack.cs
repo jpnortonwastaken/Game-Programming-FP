@@ -6,14 +6,13 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
 
-    public static float knockback = 20;
+    public static float knockback = 10;
     public GameObject slashEffect;
     float pitch = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -44,7 +43,5 @@ public class PlayerAttack : MonoBehaviour
         GameObject gameObject = GameObject.FindGameObjectWithTag("Player");
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
         rb.AddForce(-1 * Camera.main.transform.forward * knockback, ForceMode.Impulse);
-
-        
     }
 }

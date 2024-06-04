@@ -8,6 +8,7 @@ TagManager:
   - Ground
   - Cane
   - Attack
+  - Player Look At
   layers:
   - Default
   - TransparentFX

@@ -6,6 +6,7 @@ public class MouseLook : MonoBehaviour
 {
     // Start is called before the first frame update
     public Transform playerBody;
+    public Transform playerLookAt;
     public float mouseSensitivity = 250;
     float yaw = 0;
     float pitch = 0;
@@ -15,6 +16,7 @@ public class MouseLook : MonoBehaviour
     void Start()
     {
         playerBody = transform.parent.transform;
+        playerLookAt = GameObject.FindGameObjectWithTag("Player Look At").transform;
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -37,10 +39,11 @@ public class MouseLook : MonoBehaviour
 
         pitch = Mathf.Clamp(pitch, -89.9f, 89.9f);
         Quaternion rotation = Quaternion.Euler(pitch, yaw, 0);
-        transform.position = playerBody.position + rotation * direction;
+        transform.position = playerLookAt.position + rotation * direction;
+        
         playerBody.rotation = Quaternion.Euler(0, yaw, 0);
 
 
-        transform.LookAt(playerBody.position);
+        transform.LookAt(playerLookAt.position);
     }
 }

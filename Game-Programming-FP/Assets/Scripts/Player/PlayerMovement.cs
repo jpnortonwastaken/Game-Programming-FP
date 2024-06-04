@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     public bool doubleJumpEnable;
     bool doubleJump;
     public bool dashEnable;
+    public AudioClip jumpSFX;
     bool readyToDash;
     bool dash;
     bool notDashing;
@@ -128,6 +129,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+        AudioSource.PlayClipAtPoint(jumpSFX, transform.position);
     }
 
     private void Dash()

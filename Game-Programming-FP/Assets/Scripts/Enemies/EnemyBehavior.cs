@@ -34,12 +34,14 @@ public class EnemyBehavior : MonoBehaviour
             isKnockBacked = true;
             PlayerAttack.KnockBack();
             Destroy(gameObject);
-            Invoke(nameof(ResetKnockBack), knockBackCooldown);
+            isKnockBacked = false;
+            //Invoke(nameof(ResetKnockBack), knockBackCooldown);
         }
     }
 
-    private void ResetKnockBack()
+/*
+    private void ResetKnockBack()   
     {
         isKnockBacked = false;
-    }
+    } */
 }

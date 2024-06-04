@@ -9,6 +9,7 @@ TagManager:
   - Cane
   - Attack
   - Player Look At
+  - Player Model
   layers:
   - Default
   - TransparentFX

@@ -1951,7 +1951,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerBody: {fileID: 1997880776}
-  mouseSensitivity: 100
+  mouseSensitivity: 300
   distance: 8
 --- !u!114 &963194230
 MonoBehaviour:
@@ -4690,8 +4690,15 @@ MonoBehaviour:
   jumpForce: 7
   jumpCooldown: 0.25
   dashCooldown: 0.25
-  doubleJumpEnable: 0
-  dashEnable: 0
+<<<<<<< main
+  dashForce: 20
+  doubleJumpEnable: 1
+  dashEnable: 1
+=======
+  dashForce: 20
+  doubleJumpEnable: 1
+  dashEnable: 1
+>>>>>>> Chris
   jumpKey: 32
   shiftKey: 304
   playerHeight: 2

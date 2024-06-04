@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
+
     public bool readyToAttack;
     public static float knockback = 10;
     public GameObject slashEffect;
@@ -43,8 +44,6 @@ public class PlayerAttack : MonoBehaviour
         GameObject gameObject = GameObject.FindGameObjectWithTag("Player");
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
         rb.AddForce(-1 * Camera.main.transform.forward * knockback, ForceMode.Impulse);
-
-        
     }
 
     private void ResetAttack()

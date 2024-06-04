@@ -9,12 +9,17 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed = 10f;
     public float jumpForce = 8f;
     public float jumpCooldown = 0.25f;
+    public float dashCooldown = 0.25f;
     bool readyToJump;
     public bool doubleJumpEnable;
     bool doubleJump;
+    public bool dashEnable;
+    bool readyToDash;
+    bool dash;
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
+    public KeyCode shiftKey = KeyCode.LeftShift;
 
     [Header("Ground Check")]
     public float playerHeight = 2;
@@ -34,6 +39,8 @@ public class PlayerMovement : MonoBehaviour
         readyToJump = true;
         doubleJump = true;
         orientation = gameObject.transform;
+        readyToDash = true;
+        dash = true;
     }
 
     private void Update()
@@ -81,9 +88,19 @@ public class PlayerMovement : MonoBehaviour
             Invoke(nameof(ResetJump), jumpCooldown);
         }
 
+        // dash
+        if(Input.GetKeyDown(shiftKey) && readyToDash && dash && dashEnable) 
+        {
+            readyToDash = false;
+            dash = false;
+            Dash();
+            Invoke(nameof(ResetDash), jumpCooldown);
+        }
+
         if(grounded)
         {
             doubleJump = true;
+            dash = true;
         }
 
         // variable height
@@ -91,6 +108,8 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = new Vector3(rb.velocity.x, 2f, rb.velocity.z);
         }
+
+
     }
 
     private void MovePlayer()
@@ -109,8 +128,18 @@ public class PlayerMovement : MonoBehaviour
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
 
+    private void Dash()
+    {
+        rb.AddForce(Camera.main.transform.forward * jumpForce, ForceMode.Impulse);
+    }
+
     private void ResetJump()
     {
         readyToJump = true;
+    }
+
+    private void ResetDash()
+    {
+        readyToDash = true;
     }
 }

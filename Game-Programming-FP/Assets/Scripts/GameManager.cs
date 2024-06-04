@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
         if(!finalGame){
             SceneManager.LoadScene(nextLevel);
         }else{
-            //load final screen or final message?
+            ShowScreen();
         }
     }
 }

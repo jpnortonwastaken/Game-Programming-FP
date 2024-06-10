@@ -19,6 +19,8 @@ public class PlayerMovement : MonoBehaviour
     public bool doubleJumpEnable;
     bool doubleJump;
     public bool dashEnable;
+    public AudioClip jumpSFX;
+    public Animator animator;
     bool readyToDash;
     bool dash;
     bool notDashing;
@@ -49,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
         dash = true;
         isKnockBacked = false;
         isKnockBackedHelper = false;
+        animator = GameObject.FindGameObjectWithTag("Player Model").GetComponent<Animator>();
     }
 
     private void Update()
@@ -58,13 +61,6 @@ public class PlayerMovement : MonoBehaviour
         if (GameManager.gameEnded == false)
         {
             PlayerInput();
-            if (isKnockBackedHelper) 
-            {
-                Invoke(nameof(ResetKnockBack), knockBackCooldown);
-                isKnockBackedHelper = false;
-                dash = true;
-                doubleJump = true;
-            }
         }
         else 
         {
@@ -84,6 +80,12 @@ public class PlayerMovement : MonoBehaviour
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
+
+        if (horizontalInput == 0 && verticalInput == 0) {
+            animator.SetBool("isRunning", false);
+        } else {
+            animator.SetBool("isRunning", true);
+        }
 
 
         // when to jump
@@ -123,7 +125,15 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = new Vector3(rb.velocity.x, 2f, rb.velocity.z);
         }
-
+        
+        // Pogoing
+        if (isKnockBackedHelper) 
+            {
+                Invoke(nameof(ResetKnockBack), knockBackCooldown);
+                isKnockBackedHelper = false;
+                dash = true;
+                doubleJump = true;
+            }
 
     }
 
@@ -150,6 +160,8 @@ public class PlayerMovement : MonoBehaviour
     {
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+        //AudioSource.PlayClipAtPoint(jumpsSFX, transform.position);
+        animator.SetTrigger("Jump");
     }
 
     private void Dash()

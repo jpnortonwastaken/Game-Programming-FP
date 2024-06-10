@@ -9,11 +9,15 @@ public class PlayerAttack : MonoBehaviour
     public bool readyToAttack;
     public GameObject slashEffect;
     public float attackCooldown = 1;
+    public AudioClip hitSFX;
+    public Animator animator;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         readyToAttack = true;
+        animator = GameObject.FindGameObjectWithTag("Player Model").GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -35,7 +39,8 @@ public class PlayerAttack : MonoBehaviour
             transform.position + Camera.main.transform.forward, Camera.main.transform.rotation)
                 as GameObject;
         attack.transform.SetParent(gameObject.transform);
-
+        AudioSource.PlayClipAtPoint(hitSFX, transform.position);
+        animator.SetTrigger("Attack");
     }
 
     private void ResetAttack()

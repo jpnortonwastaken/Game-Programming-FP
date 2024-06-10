@@ -15,6 +15,7 @@ public class Enemy_Patrol : MonoBehaviour
     void Start()
     {
         target = pointA;
+        transform.RotateAround(transform.position, transform.up, 180);
     }
 
     void Update()
@@ -24,12 +25,14 @@ public class Enemy_Patrol : MonoBehaviour
             if (Vector3.Distance(transform.position, target.position) < 0.1f)
             {
                 StartCoroutine(WaitAtPoint());
+                transform.RotateAround(transform.position, transform.up, 180);
             }
             else
             {
                 transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
             }
         }
+
     }
 
     IEnumerator WaitAtPoint()

@@ -7,7 +7,6 @@ public class PlayerAttack : MonoBehaviour
 {
 
     public bool readyToAttack;
-    public static float knockback = 10;
     public GameObject slashEffect;
     public float attackCooldown = 1;
 
@@ -37,13 +36,6 @@ public class PlayerAttack : MonoBehaviour
                 as GameObject;
         attack.transform.SetParent(gameObject.transform);
 
-    }
-
-    public static void KnockBack()
-    {
-        GameObject gameObject = GameObject.FindGameObjectWithTag("Player");
-        Rigidbody rb = gameObject.GetComponent<Rigidbody>();
-        rb.AddForce(-1 * Camera.main.transform.forward * knockback, ForceMode.Impulse);
     }
 
     private void ResetAttack()

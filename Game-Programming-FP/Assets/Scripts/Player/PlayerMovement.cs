@@ -10,7 +10,11 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce = 8f;
     public float jumpCooldown = 0.25f;
     public float dashCooldown = 0.25f;
-     public float dashForce = 20f;
+    public float dashForce = 20f;
+    public static float knockback = 10f;
+    float knockBackCooldown = 0.25f;
+    public static bool isKnockBacked;
+    public static bool isKnockBackedHelper;
     bool readyToJump;
     public bool doubleJumpEnable;
     bool doubleJump;
@@ -43,6 +47,8 @@ public class PlayerMovement : MonoBehaviour
         orientation = gameObject.transform;
         readyToDash = true;
         dash = true;
+        isKnockBacked = false;
+        isKnockBackedHelper = false;
     }
 
     private void Update()
@@ -52,6 +58,13 @@ public class PlayerMovement : MonoBehaviour
         if (GameManager.gameEnded == false)
         {
             PlayerInput();
+            if (isKnockBackedHelper) 
+            {
+                Invoke(nameof(ResetKnockBack), knockBackCooldown);
+                isKnockBackedHelper = false;
+                dash = true;
+                doubleJump = true;
+            }
         }
         else 
         {
@@ -61,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (GameManager.gameEnded == false && readyToDash && !EnemyBehavior.isKnockBacked)
+        if (GameManager.gameEnded == false && readyToDash && !isKnockBacked)
         {
             MovePlayer();
         }
@@ -74,7 +87,7 @@ public class PlayerMovement : MonoBehaviour
 
 
         // when to jump
-        if(Input.GetKey(jumpKey) && readyToJump && grounded && dashEnable && !EnemyBehavior.isKnockBacked)
+        if(Input.GetKey(jumpKey) && readyToJump && grounded && dashEnable && !isKnockBacked)
         {
             readyToJump = false;
             Jump();
@@ -82,7 +95,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // double jump
-        if(Input.GetKeyDown(jumpKey) && readyToJump && !grounded && doubleJump && doubleJumpEnable && dashEnable && !EnemyBehavior.isKnockBacked)
+        if(Input.GetKeyDown(jumpKey) && readyToJump && !grounded && doubleJump && doubleJumpEnable && dashEnable && !isKnockBacked)
         {
             readyToJump = false;
             doubleJump = false;
@@ -91,7 +104,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // dash
-        if(Input.GetKeyDown(shiftKey) && readyToDash && dash && dashEnable && !EnemyBehavior.isKnockBacked) 
+        if(Input.GetKeyDown(shiftKey) && readyToDash && dash && dashEnable && !isKnockBacked) 
         {
             readyToDash = false;
             dash = false;
@@ -124,6 +137,15 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = new Vector3(0f, rb.velocity.y, 0f);
     }
 
+    public static void KnockBack()
+    {
+        GameObject gameObject = GameObject.FindGameObjectWithTag("Player");
+        Rigidbody rb = gameObject.GetComponent<Rigidbody>();
+        rb.AddForce(-1 * Camera.main.transform.forward * knockback, ForceMode.Impulse);
+        isKnockBackedHelper = true;
+    }
+
+
     private void Jump()
     {
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
@@ -145,5 +167,10 @@ public class PlayerMovement : MonoBehaviour
     {
         readyToDash = true;  
         rb.velocity = new Vector3(0f, 0f, 0f);
+    }
+
+    private void ResetKnockBack()   
+    {
+        isKnockBacked = false;
     }
 }

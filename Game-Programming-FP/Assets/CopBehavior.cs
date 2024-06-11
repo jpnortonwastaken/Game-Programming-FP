@@ -12,8 +12,8 @@ public class CopBehavior : MonoBehaviour
         Dead
     }
     public FSMStates currentState;
-    public float attackDistance = 5;
-    public float chaseDistance = 10;
+    public float attackDistance = 2.5f;
+    public float chaseDistance = 5;
     public GameObject player;
     public GameObject gunTip;
     public float shootRate = 2;
@@ -28,7 +28,6 @@ public class CopBehavior : MonoBehaviour
     Transform deadTransform;
     Vector3 nextDestination;
     bool isDead;
-    
 
 
     // Start is called before the first frame update
@@ -76,7 +75,7 @@ public class CopBehavior : MonoBehaviour
             currentState = FSMStates.Chase;
         }
         FaceTarget(nextDestination);
-        // transform.position = Vector3.MoveTowards(transform.position, nextDestination, enemySpeed*Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, nextDestination, enemySpeed*Time.deltaTime);
     }
     void UpdateChaseState(){
         anim.SetInteger("animState", 2);

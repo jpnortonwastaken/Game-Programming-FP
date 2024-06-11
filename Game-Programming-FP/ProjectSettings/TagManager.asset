@@ -10,6 +10,7 @@ TagManager:
   - Attack
   - Player Look At
   - Player Model
+  - GunTip
   layers:
   - Default
   - TransparentFX

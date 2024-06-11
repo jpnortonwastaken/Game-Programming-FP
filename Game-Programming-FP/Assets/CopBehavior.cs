@@ -17,7 +17,7 @@ public class CopBehavior : MonoBehaviour
     public GameObject player;
     public GameObject gunTip;
     public float shootRate = 2;
-    // public GameObject deadVFX;
+    public GameObject bulletPrefab;
     public float enemySpeed = 5;
     public Transform[] wanderPoints; 
     Animator anim;
@@ -28,6 +28,7 @@ public class CopBehavior : MonoBehaviour
     Transform deadTransform;
     Vector3 nextDestination;
     bool isDead;
+    
 
 
     // Start is called before the first frame update
@@ -68,7 +69,6 @@ public class CopBehavior : MonoBehaviour
     
     }
     void UpdatePatrolState(){
-     
         anim.SetInteger("animState", 1);
         if(Vector3.Distance(transform.position, nextDestination)<1){
             FindNextPoint();
@@ -87,7 +87,7 @@ public class CopBehavior : MonoBehaviour
             currentState = FSMStates.Patrol;
         }
         FaceTarget(nextDestination);
-        // transform.position = Vector3.MoveTowards(transform.position, nextDestination, enemySpeed*Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, nextDestination, enemySpeed*Time.deltaTime);
     }
     void UpdateAttackState(){
         nextDestination = player.transform.position;
@@ -109,7 +109,9 @@ public class CopBehavior : MonoBehaviour
         // Destroy(gameObject,3);
     }
     void FindNextPoint(){
-        if (wanderPoints.Length == 0) return;
+        if (wanderPoints.Length == 0){
+            return;
+        }
         nextDestination = wanderPoints[currentDestinationIndex].position;
         currentDestinationIndex = (currentDestinationIndex + 1) % wanderPoints.Length;
     }
@@ -128,11 +130,9 @@ public class CopBehavior : MonoBehaviour
                 elapsedTime=0.0f;
             }
         }
-       
-       
     }
     void Shooting(){
-        // Instantiate(spellProjectile, gunTip.transform.position,gunTip.transform.rotation);
+        Instantiate(bulletPrefab, gunTip.transform.position,gunTip.transform.rotation);
     }
     private void OnDrawGizmos(){
         //attack

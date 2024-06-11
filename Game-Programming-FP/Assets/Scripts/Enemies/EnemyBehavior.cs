@@ -5,13 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class EnemyBehavior : MonoBehaviour
 {
-    
-    public static bool isKnockBacked;
-    public float knockBackCooldown = 0.25f;
     // Start is called before the first frame update
     void Start()
     {
-        isKnockBacked = false;
     }
 
     // Update is called once per frame
@@ -31,17 +27,9 @@ public class EnemyBehavior : MonoBehaviour
         }
         else if (other.CompareTag("Attack"))
         {
-            isKnockBacked = true;
-            PlayerAttack.KnockBack();
+            PlayerMovement.isKnockBacked = true;
+            PlayerMovement.KnockBack();
             Destroy(gameObject);
-            isKnockBacked = false;
-            //Invoke(nameof(ResetKnockBack), knockBackCooldown);
         }
     }
-
-/*
-    private void ResetKnockBack()   
-    {
-        isKnockBacked = false;
-    } */
 }

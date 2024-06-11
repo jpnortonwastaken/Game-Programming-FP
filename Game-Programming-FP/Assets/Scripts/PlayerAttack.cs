@@ -7,15 +7,17 @@ public class PlayerAttack : MonoBehaviour
 {
 
     public bool readyToAttack;
-    public static float knockback = 10;
     public GameObject slashEffect;
     public float attackCooldown = 1;
     public AudioClip hitSFX;
+    public Animator animator;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         readyToAttack = true;
+        animator = GameObject.FindGameObjectWithTag("Player Model").GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -38,13 +40,7 @@ public class PlayerAttack : MonoBehaviour
                 as GameObject;
         attack.transform.SetParent(gameObject.transform);
         AudioSource.PlayClipAtPoint(hitSFX, transform.position);
-    }
-
-    public static void KnockBack()
-    {
-        GameObject gameObject = GameObject.FindGameObjectWithTag("Player");
-        Rigidbody rb = gameObject.GetComponent<Rigidbody>();
-        rb.AddForce(-1 * Camera.main.transform.forward * knockback, ForceMode.Impulse);
+        animator.SetTrigger("Attack");
     }
 
     private void ResetAttack()

@@ -139,7 +139,7 @@ public class CopBehavior : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, attackDistance);
         //chase
         Gizmos.color = Color.green;
-         Gizmos.DrawWireSphere(transform.position, chaseDistance);
+        Gizmos.DrawWireSphere(transform.position, chaseDistance);
 
     }
     private void OnDestroy(){

@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Ground Check")]
     public float playerHeight = 2;
     public LayerMask groundLayer;
-    public static bool grounded;
+    public bool grounded;
 
     Transform orientation;
     float horizontalInput;
@@ -57,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         // ground check
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, groundLayer);
+        
         if (GameManager.gameEnded == false)
         {
             PlayerInput();
@@ -89,7 +89,7 @@ public class PlayerMovement : MonoBehaviour
 
 
         // when to jump
-        if(Input.GetKey(jumpKey) && readyToJump && grounded && dashEnable && !isKnockBacked)
+        if(Input.GetKey(jumpKey) && readyToJump && grounded && !isKnockBacked)
         {
             readyToJump = false;
             Jump();
@@ -97,7 +97,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // double jump
-        if(Input.GetKeyDown(jumpKey) && readyToJump && !grounded && doubleJump && doubleJumpEnable && dashEnable && !isKnockBacked)
+        if(Input.GetKeyDown(jumpKey) && readyToJump && !grounded && doubleJump && doubleJumpEnable && !isKnockBacked)
         {
             readyToJump = false;
             doubleJump = false;
@@ -184,5 +184,24 @@ public class PlayerMovement : MonoBehaviour
     private void ResetKnockBack()   
     {
         isKnockBacked = false;
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        // Check if the player is on the ground
+        foreach (ContactPoint contact in collision.contacts)
+        {
+            if (Vector3.Dot(contact.normal, Vector3.up) > 0.5f)
+            {
+                grounded = true;
+                return;
+            }
+        }
+        grounded = false;
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        grounded = false;
     }
 }

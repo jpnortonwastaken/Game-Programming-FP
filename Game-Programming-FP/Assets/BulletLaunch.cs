@@ -35,6 +35,7 @@ public class BulletLaunch : MonoBehaviour
 	}
 	private void OnTriggerEnter(Collider other)
     {
+		print("on trigger");
         if (other.CompareTag("Player"))
         {
             GameManager gameManager = FindObjectOfType<GameManager>();

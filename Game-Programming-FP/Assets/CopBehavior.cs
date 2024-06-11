@@ -11,6 +11,7 @@ public class CopBehavior : MonoBehaviour
         Attack,
         Dead
     }
+    public string gunTipTag;
     public FSMStates currentState;
     public float attackDistance = 2.5f;
     public float chaseDistance = 5;
@@ -35,7 +36,7 @@ public class CopBehavior : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player");
-        gunTip = GameObject.FindGameObjectWithTag("GunTip");
+        gunTip = GameObject.FindGameObjectWithTag(gunTipTag);
         Initialize();    
         isDead= false;    
     }

@@ -19,7 +19,7 @@ public class CopBehavior : MonoBehaviour
     public float shootRate = 2;
     // public GameObject deadVFX;
     public float enemySpeed = 5;
-     public Transform[] wanderPoints; 
+    public Transform[] wanderPoints; 
     Animator anim;
     float distanceToPlayer;
     public float elapsedTime=0;
@@ -59,6 +59,7 @@ public class CopBehavior : MonoBehaviour
                 UpdateDeadState();
                 break;
         }    
+        
         elapsedTime+= Time.deltaTime;       
     }
     void Initialize(){
@@ -67,7 +68,7 @@ public class CopBehavior : MonoBehaviour
     
     }
     void UpdatePatrolState(){
-        print("Patrolling");
+     
         anim.SetInteger("animState", 1);
         if(Vector3.Distance(transform.position, nextDestination)<1){
             FindNextPoint();
@@ -102,7 +103,7 @@ public class CopBehavior : MonoBehaviour
         ShootPlayer();
     }
     void UpdateDeadState(){
-        anim.SetInteger(4);
+        anim.SetInteger("animState",4);
         isDead = true;
         deadTransform = gameObject.transform;
         // Destroy(gameObject,3);
@@ -123,7 +124,7 @@ public class CopBehavior : MonoBehaviour
         if(!isDead){
             if(elapsedTime>=shootRate){
                 var animDuration = anim.GetCurrentAnimatorStateInfo(0).length;
-                // Invoke("Shooting",animDuration); 
+                Invoke("Shooting",animDuration); 
                 elapsedTime=0.0f;
             }
         }

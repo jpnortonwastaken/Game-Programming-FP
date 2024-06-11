@@ -3496,6 +3496,8 @@ MonoBehaviour:
   gameText: {fileID: 161514514}
   starText: {fileID: 1736708078}
   replayButton: {fileID: 257541543}
+  secondStarCount: 60
+  thirdStarCount: 30
 --- !u!4 &1721153968
 Transform:
   m_ObjectHideFlags: 0

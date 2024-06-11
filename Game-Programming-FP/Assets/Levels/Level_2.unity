@@ -1343,6 +1343,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6673332060202817561, guid: 68817b2d6319d4e55a1844ff6d5dac16, type: 3}
+      propertyPath: attackEnable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6673332060202817561, guid: 68817b2d6319d4e55a1844ff6d5dac16, type: 3}
       propertyPath: readyToAttack
       value: 1
       objectReference: {fileID: 0}

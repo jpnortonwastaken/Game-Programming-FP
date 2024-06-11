@@ -33,17 +33,20 @@ public class BulletLaunch : MonoBehaviour
 	void FixedUpdate () {	
 			rb.velocity = gameObject.transform.forward * speed;
 	}
-
-	void OnCollisionEnter (Collision co) {
-		if (co.gameObject.tag != "Bullet" && !collided) {
-			collided = true;
-			
+	private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            GameManager gameManager = FindObjectOfType<GameManager>();
 			if (shotSFX != null && GetComponent<AudioSource>()) {
 				GetComponent<AudioSource> ().PlayOneShot (hitSFX);
 			}
-
-			Destroy(gameObject);
+            if (gameManager != null)
+            {
+                gameManager.LoseGame();
+            }
 		}
-	}
+    }
+
 
 }

@@ -139,10 +139,19 @@ public class CopBehavior : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, attackDistance);
         //chase
         Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, chaseDistance);
+         Gizmos.DrawWireSphere(transform.position, chaseDistance);
 
     }
     private void OnDestroy(){
         // Instantiate(deadVFX,deadTransform.position, deadTransform.rotation);
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Attack"))
+        {
+            PlayerMovement.isKnockBacked = true;
+            PlayerMovement.KnockBack();
+            Destroy(gameObject);
+        }
     }
 }

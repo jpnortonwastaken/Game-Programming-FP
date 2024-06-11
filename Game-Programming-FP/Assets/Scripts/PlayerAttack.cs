@@ -11,6 +11,7 @@ public class PlayerAttack : MonoBehaviour
     public float attackCooldown = 1;
     public AudioClip hitSFX;
     public Animator animator;
+    public bool attackEnable;
     
 
     // Start is called before the first frame update
@@ -23,7 +24,7 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButton("Fire1") && !GameManager.gameEnded && readyToAttack)
+        if (Input.GetButton("Fire1") && !GameManager.gameEnded && readyToAttack && attackEnable)
         {
             readyToAttack = false;
             HitEnemy();

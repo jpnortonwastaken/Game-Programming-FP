@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.20500526, g: 0.3722778, b: 0.4964119, a: 1}
+  m_IndirectSpecularColor: {r: 0.2049748, g: 0.37233466, b: 0.49657837, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3490,8 +3490,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d793a5d7a10744250aad0dcf577bbe3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  finalGame: 1
-  nextLevel: 
+  finalGame: 0
+  nextLevel: Level_2
   gameText: {fileID: 161514514}
   replayButton: {fileID: 257541543}
 --- !u!4 &1721153968
@@ -4799,9 +4799,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6673332060202817561, guid: 68817b2d6319d4e55a1844ff6d5dac16, type: 3}
+      propertyPath: attackEnable
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8227640930525935614, guid: 68817b2d6319d4e55a1844ff6d5dac16, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8446051045429277353, guid: 68817b2d6319d4e55a1844ff6d5dac16, type: 3}
+      propertyPath: dashEnable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8446051045429277353, guid: 68817b2d6319d4e55a1844ff6d5dac16, type: 3}
+      propertyPath: doubleJumpEnable
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -86,7 +86,7 @@ public class CopBehavior : MonoBehaviour
             currentState = FSMStates.Patrol;
         }
         FaceTarget(nextDestination);
-        // transform.position = Vector3.MoveTowards(transform.position, nextDestination, enemySpeed*Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, nextDestination, enemySpeed*Time.deltaTime);
     }
     void UpdateAttackState(){
         nextDestination = player.transform.position;

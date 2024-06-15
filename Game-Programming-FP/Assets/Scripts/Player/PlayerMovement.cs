@@ -160,7 +160,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
-        //AudioSource.PlayClipAtPoint(jumpsSFX, transform.position);
+        AudioSource.PlayClipAtPoint(jumpSFX, transform.position);
         animator.SetTrigger("Jump");
     }
 

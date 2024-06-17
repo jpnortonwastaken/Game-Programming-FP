@@ -1,29 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
     public float moveSpeed = 10f;
-    public float jumpForce = 8f;
+    public float acceleration = 10f;
+    public float jumpForce = 22f;
+    public float maxJumpHoldTime = 1.5f;
     public float jumpCooldown = 0.25f;
-    public float dashCooldown = 0.25f;
+    public float dashCooldown = 0.5f;
     public float dashForce = 20f;
     public static float knockback = 10f;
-    float knockBackCooldown = 0.25f;
     public static bool isKnockBacked;
     public static bool isKnockBackedHelper;
     bool readyToJump;
-    public bool doubleJumpEnable;
+    public bool doubleJumpEnable = true;
     bool doubleJump;
-    public bool dashEnable;
+    public bool dashEnable = true;
     public AudioClip jumpSFX;
     public Animator animator;
     bool readyToDash;
-    bool dash;
-    bool notDashing;
+    public float gravityScale = 5f;
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
@@ -31,46 +30,52 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Ground Check")]
     public float playerHeight = 2;
-    public LayerMask groundLayer;
     public bool grounded;
 
-    Transform orientation;
+    Transform cameraTransform;
     float horizontalInput;
     float verticalInput;
     Vector3 moveDirection;
     Rigidbody rb;
+    public float rotationSpeed = 10f;
+
+    private float jumpHoldTime = 0f;
+    private bool jumpKeyHeld = false;
+    private bool isDashing = false;
+    private bool hasDashed = false;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+        rb.drag = 5f;
+        rb.mass = 1f;
+        Physics.gravity *= gravityScale;
+
         readyToJump = true;
         doubleJump = true;
-        orientation = gameObject.transform;
         readyToDash = true;
-        dash = true;
         isKnockBacked = false;
         isKnockBackedHelper = false;
+        cameraTransform = Camera.main.transform;
         animator = GameObject.FindGameObjectWithTag("Player Model").GetComponent<Animator>();
     }
 
     private void Update()
     {
-        // ground check
-        
-        if (GameManager.gameEnded == false)
+        if (!GameManager.gameEnded)
         {
             PlayerInput();
         }
-        else 
+        else
         {
-            rb.velocity = new Vector3(0,0,0);
+            rb.velocity = Vector3.zero;
         }
     }
 
     private void FixedUpdate()
     {
-        if (GameManager.gameEnded == false && readyToDash && !isKnockBacked)
+        if (!GameManager.gameEnded && readyToDash && !isKnockBacked)
         {
             MovePlayer();
         }
@@ -81,80 +86,88 @@ public class PlayerMovement : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
-        if (horizontalInput == 0 && verticalInput == 0) {
-            animator.SetBool("isRunning", false);
-        } else {
-            animator.SetBool("isRunning", true);
-        }
+        animator.SetBool("isRunning", horizontalInput != 0 || verticalInput != 0);
 
-
-        // when to jump
-        if(Input.GetKey(jumpKey) && readyToJump && grounded && !isKnockBacked)
+        if (Input.GetKey(jumpKey))
         {
-            readyToJump = false;
-            Jump();
-            Invoke(nameof(ResetJump), jumpCooldown);
+            jumpKeyHeld = true;
+            if (readyToJump && grounded && !isKnockBacked)
+            {
+                readyToJump = false;
+                jumpHoldTime = 0f;
+                Jump();
+            }
+        }
+        else
+        {
+            jumpKeyHeld = false;
         }
 
-        // double jump
-        if(Input.GetKeyDown(jumpKey) && readyToJump && !grounded && doubleJump && doubleJumpEnable && !isKnockBacked)
+        if (Input.GetKey(jumpKey) && !grounded && jumpHoldTime < maxJumpHoldTime)
+        {
+            jumpHoldTime += Time.deltaTime;
+            rb.AddForce(Vector3.up * (jumpForce * Time.deltaTime), ForceMode.Impulse);
+        }
+
+        if (Input.GetKeyDown(jumpKey) && readyToJump && !grounded && doubleJump && doubleJumpEnable && !isKnockBacked)
         {
             readyToJump = false;
             doubleJump = false;
             Jump();
-            Invoke(nameof(ResetJump), jumpCooldown);
         }
 
-        // dash
-        if(Input.GetKeyDown(shiftKey) && readyToDash && dash && dashEnable && !isKnockBacked) 
+        if (Input.GetKeyDown(shiftKey) && readyToDash && dashEnable && !isKnockBacked && !hasDashed)
         {
             readyToDash = false;
-            dash = false;
             Dash();
             Invoke(nameof(ResetDash), dashCooldown);
         }
 
-        if(grounded)
+        if (grounded)
         {
             doubleJump = true;
-            dash = true;
+            hasDashed = false;
         }
 
-        // variable height
-        if(Input.GetKeyUp(jumpKey) && rb.velocity.y > 3f)
+        if (Input.GetKeyUp(jumpKey) && rb.velocity.y > 0)
         {
-            rb.velocity = new Vector3(rb.velocity.x, 2f, rb.velocity.z);
+            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y * 0.5f, rb.velocity.z);
         }
-        
-        // Pogoing
-        if (isKnockBackedHelper) 
-            {
-                Invoke(nameof(ResetKnockBack), knockBackCooldown);
-                isKnockBackedHelper = false;
-                dash = true;
-                doubleJump = true;
-            }
 
+        if (isKnockBackedHelper)
+        {
+            Invoke(nameof(ResetKnockBack), knockback);
+            isKnockBackedHelper = false;
+            doubleJump = true;
+        }
     }
 
     private void MovePlayer()
     {
-        // calculate movement direction
-        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+        if (isDashing) return;
 
-        rb.AddForce(moveDirection.normalized * moveSpeed * 40f, ForceMode.Force);
+        moveDirection = cameraTransform.forward * verticalInput + cameraTransform.right * horizontalInput;
+        moveDirection.y = 0;
 
-        rb.velocity = new Vector3(0f, rb.velocity.y, 0f);
+        Vector3 targetVelocity = moveDirection.normalized * moveSpeed;
+
+        Vector3 velocity = Vector3.Lerp(rb.velocity, targetVelocity, acceleration * Time.fixedDeltaTime);
+        rb.velocity = new Vector3(velocity.x, rb.velocity.y, velocity.z);
+
+        if (moveDirection != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        }
     }
 
     public static void KnockBack()
     {
         GameObject gameObject = GameObject.FindGameObjectWithTag("Player");
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
-        rb.AddForce(-1 * Camera.main.transform.forward * knockback, ForceMode.Impulse);
+        rb.AddForce(-Camera.main.transform.forward * knockback, ForceMode.Impulse);
         isKnockBackedHelper = true;
     }
-
 
     private void Jump()
     {
@@ -162,33 +175,47 @@ public class PlayerMovement : MonoBehaviour
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
         AudioSource.PlayClipAtPoint(jumpSFX, transform.position);
         animator.SetTrigger("Jump");
+        Invoke(nameof(ResetJump), jumpCooldown);
     }
 
     private void Dash()
     {
-        rb.velocity = new Vector3(0f, 0f, 0f);    
-        rb.AddForce(Camera.main.transform.forward * dashForce, ForceMode.Impulse);
+        isDashing = true;
+        hasDashed = true; // Set hasDashed to true
+        rb.velocity = Vector3.zero;
+        rb.AddForce(cameraTransform.forward * dashForce, ForceMode.Impulse);
+        RotateToDashDirection();
+    }
+
+    private void RotateToDashDirection()
+    {
+        transform.rotation = Quaternion.LookRotation(cameraTransform.forward);
     }
 
     private void ResetJump()
     {
         readyToJump = true;
+        
+        if (jumpKeyHeld && grounded)
+        {
+            Jump();
+        }
     }
 
     private void ResetDash()
     {
-        readyToDash = true;  
-        rb.velocity = new Vector3(0f, 0f, 0f);
+        readyToDash = true;
+        rb.velocity = Vector3.zero;
+        isDashing = false;
     }
 
-    private void ResetKnockBack()   
+    private void ResetKnockBack()
     {
         isKnockBacked = false;
     }
 
     private void OnCollisionStay(Collision collision)
     {
-        // Check if the player is on the ground
         foreach (ContactPoint contact in collision.contacts)
         {
             if (Vector3.Dot(contact.normal, Vector3.up) > 0.5f)

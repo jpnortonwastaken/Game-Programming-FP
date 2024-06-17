@@ -1290,18 +1290,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4213718931805378302, guid: 68817b2d6319d4e55a1844ff6d5dac16, type: 3}
-      propertyPath: playerBody
-      value: 
-      objectReference: {fileID: 316598954}
-    - target: {fileID: 4213718931805378302, guid: 68817b2d6319d4e55a1844ff6d5dac16, type: 3}
-      propertyPath: playerLookAt
-      value: 
-      objectReference: {fileID: 316598954}
-    - target: {fileID: 4213718931805378302, guid: 68817b2d6319d4e55a1844ff6d5dac16, type: 3}
-      propertyPath: mouseSensitivity
-      value: 200
-      objectReference: {fileID: 0}
     - target: {fileID: 5766432940860731120, guid: 68817b2d6319d4e55a1844ff6d5dac16, type: 3}
       propertyPath: m_LocalPosition.x
       value: 12.307915
@@ -1342,10 +1330,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6673332060202817561, guid: 68817b2d6319d4e55a1844ff6d5dac16, type: 3}
-      propertyPath: readyToAttack
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8227640930525935614, guid: 68817b2d6319d4e55a1844ff6d5dac16, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1355,11 +1339,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 68817b2d6319d4e55a1844ff6d5dac16, type: 3}
---- !u!4 &316598954 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5766432940860731120, guid: 68817b2d6319d4e55a1844ff6d5dac16, type: 3}
-  m_PrefabInstance: {fileID: 316598953}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &337606325
 PrefabInstance:
   m_ObjectHideFlags: 0

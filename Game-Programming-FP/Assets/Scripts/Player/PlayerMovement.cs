@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [Header("Movement")]
     public float moveSpeed = 10f;
     public float acceleration = 10f;
     public float jumpForce = 22f;
@@ -24,11 +23,9 @@ public class PlayerMovement : MonoBehaviour
     bool readyToDash;
     public float gravityScale = 5f;
 
-    [Header("Keybinds")]
-    public KeyCode jumpKey = KeyCode.Space;
-    public KeyCode shiftKey = KeyCode.LeftShift;
+    KeyCode jumpKey = KeyCode.Space;
+    KeyCode shiftKey = KeyCode.LeftShift;
 
-    [Header("Ground Check")]
     public float playerHeight = 2;
     public bool grounded;
 
@@ -88,7 +85,7 @@ public class PlayerMovement : MonoBehaviour
 
         animator.SetBool("isRunning", horizontalInput != 0 || verticalInput != 0);
 
-        if (Input.GetKey(jumpKey))
+        if (Input.GetKeyDown(jumpKey))
         {
             jumpKeyHeld = true;
             if (readyToJump && grounded && !isKnockBacked)
@@ -98,7 +95,7 @@ public class PlayerMovement : MonoBehaviour
                 Jump();
             }
         }
-        else
+        else if (Input.GetKeyUp(jumpKey))
         {
             jumpKeyHeld = false;
         }
@@ -195,11 +192,6 @@ public class PlayerMovement : MonoBehaviour
     private void ResetJump()
     {
         readyToJump = true;
-        
-        if (jumpKeyHeld && grounded)
-        {
-            Jump();
-        }
     }
 
     private void ResetDash()

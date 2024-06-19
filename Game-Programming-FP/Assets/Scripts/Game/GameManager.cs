@@ -10,20 +10,40 @@ public class GameManager : MonoBehaviour
     public string nextLevel;
     public static bool gameEnded = false;
     public Text gameText;
-    public Text starText;
+    public Text timerText;
     public Button replayButton;
     private float elapsedTime;
-    public float secondStarCount = 60f;
-    public float thirdStarCount = 30f;
+    public int starCount;
+    public Image star1;
+    public Image star2;
+    public Image star3;
+    private CoinImageHandler star1Script;
+    private CoinImageHandler star2Script;
+    private CoinImageHandler star3Script;
+    public float timeRemaining = 100; 
+    public bool timerIsRunning = false;
+    public float gravityScale = 50f;
+
+    
 
     void Start(){
+        timerIsRunning=true;
+        timerText.text = timeRemaining.ToString();
+        starCount = 0;
         elapsedTime = 0;
         gameEnded = false;
+        Time.timeScale = 1f;
         replayButton.onClick.AddListener(ReplayGame);
         gameText.gameObject.SetActive(false);
-        starText.gameObject.SetActive(false);
         replayButton.gameObject.SetActive(false);
+        star1Script = star1.GetComponent<CoinImageHandler>();
+        star2Script = star2.GetComponent<CoinImageHandler>();
+        star3Script = star3.GetComponent<CoinImageHandler>();
+        Physics.gravity = new Vector3(0, -gravityScale, 0);
+        
+
     }
+
 
     void Update() {
         if(!gameEnded){
@@ -32,18 +52,43 @@ public class GameManager : MonoBehaviour
         if (GameObject.FindGameObjectWithTag("Player").transform.position.y < -5) {
             LoseGame();
         }
-    }
-    public string GetStarCount(){
-        int starCount = 1;
-        if(elapsedTime<=secondStarCount){
-            starCount+=1;
+         if (timerIsRunning)
+        {
+            if (timeRemaining > 0)
+            {
+                timeRemaining -= Time.deltaTime;
+                DisplayTime(timeRemaining);
+            }
+            else
+            {
+                timeRemaining = 0;
+                timerIsRunning = false;
+                LoseGame();
+            }
         }
-        if (elapsedTime<= thirdStarCount){
-            starCount+=1;
-        }
-        return new string('★', starCount);
     }
+    public void HandleAddStar(){
+        if(starCount==0){
+            star1.gameObject.SetActive(true);
+            star1Script.FadeOut(true);
+        }else if(starCount == 1){
+            star2.gameObject.SetActive(true);
+            star2Script.FadeOut(true);
+        }else if (starCount == 2){
+            star3.gameObject.SetActive(true);
+            star3Script.FadeOut(true); 
+        }
+        starCount++;
+    }
+    void DisplayTime(float timeToDisplay)
+    {
+        timeToDisplay += 1;
 
+        float minutes = Mathf.FloorToInt(timeToDisplay / 60);
+        float seconds = Mathf.FloorToInt(timeToDisplay % 60);
+
+        timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
 
     public void ShowScreen() {
         gameText.gameObject.SetActive(true);
@@ -58,9 +103,7 @@ public class GameManager : MonoBehaviour
         {
             gameEnded = true;
             gameText.text = "You Win!";
-            starText.text = GetStarCount();
-            starText.gameObject.SetActive(true);
-            Invoke("LoadNextLevel", 2);
+            LoadNextLevel();
         }
     }
 
@@ -69,6 +112,7 @@ public class GameManager : MonoBehaviour
         if (!gameEnded)
         {
             gameEnded = true;
+             Time.timeScale = 0f;
             gameText.text = "You Lose!";
             ShowScreen();
         }
@@ -76,6 +120,7 @@ public class GameManager : MonoBehaviour
     public void ReplayGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Start();
     }
     void LoadNextLevel(){
         if(!finalGame){
@@ -84,5 +129,6 @@ public class GameManager : MonoBehaviour
             ShowScreen();
         }
     }
+
 }
 

@@ -3,7 +3,10 @@
 public class DemoAnimationSelector : MonoBehaviour
 {
     private Animator m_Animator = null;
-
+    public void Start()
+    {
+        SwitchAnimation(2);
+    }
     public void SwitchAnimation(int index)
     {
         if (!m_Animator)

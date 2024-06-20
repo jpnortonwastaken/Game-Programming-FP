@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class CopBehavior : MonoBehaviour
 {
@@ -29,6 +30,10 @@ public class CopBehavior : MonoBehaviour
     Transform deadTransform;
     Vector3 nextDestination;
     bool isDead;
+    //nav mesh stuff below
+    public NavMeshAgent agent;
+    public Transform enemyEyes;
+    public float fieldOfView = 45f;
 
 
     // Start is called before the first frame update
@@ -69,6 +74,8 @@ public class CopBehavior : MonoBehaviour
     
     }
     void UpdatePatrolState(){
+         agent.stoppingDistance = 0;
+        agent.speed = enemySpeed;
         anim.SetInteger("animState", 1);
         if(Vector3.Distance(transform.position, nextDestination)<1){
             FindNextPoint();
@@ -76,9 +83,12 @@ public class CopBehavior : MonoBehaviour
             currentState = FSMStates.Chase;
         }
         FaceTarget(nextDestination);
-        transform.position = Vector3.MoveTowards(transform.position, nextDestination, enemySpeed*Time.deltaTime);
+        agent.SetDestination(nextDestination);
+        // transform.position = Vector3.MoveTowards(transform.position, nextDestination, enemySpeed*Time.deltaTime);
     }
     void UpdateChaseState(){
+        agent.stoppingDistance = attackDistance;
+        agent.speed = enemySpeed*2;
         anim.SetInteger("animState", 2);
         nextDestination = player.transform.position;
         if(distanceToPlayer <= attackDistance){
@@ -87,7 +97,8 @@ public class CopBehavior : MonoBehaviour
             currentState = FSMStates.Patrol;
         }
         FaceTarget(nextDestination);
-        transform.position = Vector3.MoveTowards(transform.position, nextDestination, enemySpeed*Time.deltaTime);
+        agent.SetDestination(nextDestination);
+        // transform.position = Vector3.MoveTowards(transform.position, nextDestination, enemySpeed*Time.deltaTime);
     }
     void UpdateAttackState(){
         nextDestination = player.transform.position;
@@ -114,6 +125,7 @@ public class CopBehavior : MonoBehaviour
         }
         nextDestination = wanderPoints[currentDestinationIndex].position;
         currentDestinationIndex = (currentDestinationIndex + 1) % wanderPoints.Length;
+        agent.SetDestination(nextDestination);
     }
 
     void FaceTarget(Vector3 target){

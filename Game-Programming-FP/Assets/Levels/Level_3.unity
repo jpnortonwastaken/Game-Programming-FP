@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.2049748, g: 0.37233466, b: 0.49657837, a: 1}
+  m_IndirectSpecularColor: {r: 0.20500526, g: 0.3722778, b: 0.4964119, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1497,10 +1497,15 @@ MonoBehaviour:
   finalGame: 1
   nextLevel: 
   gameText: {fileID: 161514514}
-  starText: {fileID: 510369194}
+  timerText: {fileID: 0}
   replayButton: {fileID: 257541543}
-  secondStarCount: 60
-  thirdStarCount: 30
+  starCount: 0
+  star1: {fileID: 0}
+  star2: {fileID: 0}
+  star3: {fileID: 0}
+  timeRemaining: 100
+  timerIsRunning: 0
+  gravityScale: 50
 --- !u!4 &1721153968
 Transform:
   m_ObjectHideFlags: 0

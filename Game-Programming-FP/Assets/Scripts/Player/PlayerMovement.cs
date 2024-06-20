@@ -136,9 +136,10 @@ public class PlayerMovement : MonoBehaviour
 
         if (isKnockBackedHelper)
         {
-            Invoke(nameof(ResetKnockBack), knockback);
+            Invoke(nameof(ResetKnockBack), 0.25f);
             isKnockBackedHelper = false;
             doubleJump = true;
+            hasDashed = false;
         }
     }
 
@@ -165,7 +166,7 @@ public class PlayerMovement : MonoBehaviour
     {
         GameObject gameObject = GameObject.FindGameObjectWithTag("Player");
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
-        rb.AddForce(-Camera.main.transform.forward * knockback, ForceMode.Impulse);
+        rb.AddForce(-Camera.main.transform.forward * knockback * 2, ForceMode.Impulse);
         isKnockBackedHelper = true;
     }
 

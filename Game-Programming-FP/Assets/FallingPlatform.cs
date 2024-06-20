@@ -7,12 +7,14 @@ public class FallingPlatform : MonoBehaviour
 {
     bool isFalling = false;
     float downSpeed = 0;
+    public Transform currentTransform;
     private void OnCollisionEnter(Collision other)
     {
         
         if (other.gameObject.name == "Player")
         {
             Invoke("StartFalling", 3);
+            Destroy(gameObject, 5);
         }
 
     }
@@ -21,10 +23,10 @@ public class FallingPlatform : MonoBehaviour
     {
         if (isFalling)
         {
-            downSpeed = 4;
+            downSpeed = 0.5f;
             transform.position = new Vector3(transform.position.x,
                 transform.position.y - downSpeed,
-                transform.position.x);
+                transform.position.z);
         }
     }
 

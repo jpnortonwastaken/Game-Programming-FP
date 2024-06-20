@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip jumpSFX;
     public Animator animator;
     bool readyToDash;
-    public float gravityScale = 5f;
+
 
     KeyCode jumpKey = KeyCode.Space;
     KeyCode shiftKey = KeyCode.LeftShift;
@@ -47,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
         rb.freezeRotation = true;
         rb.drag = 5f;
         rb.mass = 1f;
-        Physics.gravity *= gravityScale;
+
 
         readyToJump = true;
         doubleJump = true;

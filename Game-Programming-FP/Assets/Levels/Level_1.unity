@@ -3787,7 +3787,6 @@ MonoBehaviour:
   star3: {fileID: 494985603}
   timeRemaining: 100
   timerIsRunning: 0
-  gravityScale: 50
 --- !u!4 &1721153968
 Transform:
   m_ObjectHideFlags: 0
@@ -3846,7 +3845,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5444466895581803245, guid: 68817b2d6319d4e55a1844ff6d5dac16, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5766432940860731120, guid: 68817b2d6319d4e55a1844ff6d5dac16, type: 3}
       propertyPath: m_LocalPosition.x

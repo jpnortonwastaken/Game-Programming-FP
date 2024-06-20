@@ -11,6 +11,7 @@ TagManager:
   - Player Look At
   - Player Model
   - GunTip
+  - Wings
   layers:
   - Default
   - TransparentFX

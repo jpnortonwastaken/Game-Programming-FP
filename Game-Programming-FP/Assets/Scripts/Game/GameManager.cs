@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     private CoinImageHandler star3Script;
     public float timeRemaining = 100; 
     public bool timerIsRunning = false;
-    public float gravityScale = 50f;
+
 
     
 
@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
         star1Script = star1.GetComponent<CoinImageHandler>();
         star2Script = star2.GetComponent<CoinImageHandler>();
         star3Script = star3.GetComponent<CoinImageHandler>();
-        Physics.gravity = new Vector3(0, -gravityScale, 0);
+
         
 
     }

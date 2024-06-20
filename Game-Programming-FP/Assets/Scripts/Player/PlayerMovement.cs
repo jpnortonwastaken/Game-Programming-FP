@@ -21,7 +21,8 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip jumpSFX;
     public Animator animator;
     bool readyToDash;
-
+    GameObject wings;
+    Animator wingsAnimator;
 
     KeyCode jumpKey = KeyCode.Space;
     KeyCode shiftKey = KeyCode.LeftShift;
@@ -47,8 +48,8 @@ public class PlayerMovement : MonoBehaviour
         rb.freezeRotation = true;
         rb.drag = 5f;
         rb.mass = 1f;
-
-
+        wings = GameObject.FindGameObjectWithTag("Wings");
+        wingsAnimator = wings.GetComponent<Animator>();
         readyToJump = true;
         doubleJump = true;
         readyToDash = true;
@@ -111,6 +112,7 @@ public class PlayerMovement : MonoBehaviour
             readyToJump = false;
             doubleJump = false;
             Jump();
+            wingsAnimator.SetInteger("Mode", 2);
         }
 
         if (Input.GetKeyDown(shiftKey) && readyToDash && dashEnable && !isKnockBacked && !hasDashed)
@@ -122,6 +124,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (grounded)
         {
+            wingsAnimator.SetInteger("Mode", 0);
             doubleJump = true;
             hasDashed = false;
         }
@@ -178,15 +181,9 @@ public class PlayerMovement : MonoBehaviour
     private void Dash()
     {
         isDashing = true;
-        hasDashed = true; // Set hasDashed to true
+        hasDashed = true;
         rb.velocity = Vector3.zero;
-        rb.AddForce(cameraTransform.forward * dashForce, ForceMode.Impulse);
-        RotateToDashDirection();
-    }
-
-    private void RotateToDashDirection()
-    {
-        transform.rotation = Quaternion.LookRotation(cameraTransform.forward);
+        rb.AddForce(transform.forward * dashForce, ForceMode.Impulse);
     }
 
     private void ResetJump()

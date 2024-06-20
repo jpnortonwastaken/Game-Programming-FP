@@ -8,7 +8,6 @@ public class DynamicCloud : MonoBehaviour
     public float distance = 4;
     Vector3 startPos;
     Vector3 previousPos;
-    private Rigidbody rb;
     void Start()
     {
         startPos = transform.position;
@@ -23,12 +22,6 @@ public class DynamicCloud : MonoBehaviour
 
         transform.position = newPos;
 
-        if (rb != null)
-        {
-            Vector3 platformVector = transform.position - previousPos;
-            rb.velocity += platformVector * speed;
-        }
-
         previousPos = transform.position;
     }
 
@@ -36,7 +29,7 @@ public class DynamicCloud : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            rb = other.GetComponent<Rigidbody>();
+            other.transform.parent = transform;
         }
     }
 
@@ -44,7 +37,7 @@ public class DynamicCloud : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            rb = null;
+            other.transform.parent = null;
         }
     }
 }

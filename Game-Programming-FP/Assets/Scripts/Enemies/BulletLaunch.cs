@@ -45,7 +45,7 @@ public class BulletLaunch : MonoBehaviour
             }
             if (gameManager != null)
             {
-                gameManager.LoseGame();
+                gameManager.TakeHit();
             }
 
             Destroy(gameObject);

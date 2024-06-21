@@ -231,4 +231,9 @@ public class PlayerMovement : MonoBehaviour
     {
         grounded = false;
     }
+
+    public void Death()
+    {
+        animator.SetTrigger("Death");
+    }
 }

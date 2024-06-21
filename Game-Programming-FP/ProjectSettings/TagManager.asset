@@ -12,6 +12,7 @@ TagManager:
   - Player Model
   - GunTip
   - Wings
+  - TimeTracker
   layers:
   - Default
   - TransparentFX

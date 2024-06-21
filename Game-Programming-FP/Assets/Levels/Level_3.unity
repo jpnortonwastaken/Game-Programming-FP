@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.20500526, g: 0.3722778, b: 0.4964119, a: 1}
+  m_IndirectSpecularColor: {r: 0.2049748, g: 0.37233466, b: 0.49657837, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1938,7 +1938,7 @@ Transform:
   m_GameObject: {fileID: 82986947}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 29.800003, z: 71.2}
+  m_LocalPosition: {x: 0, y: 19, z: 71.2}
   m_LocalScale: {x: 1.5922, y: 0.5254367, z: 1.5922}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2463,7 +2463,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &370222888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2846,7 +2846,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1263224779540128717, guid: 943b6297503f6b94785a879b6d9bf599, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.2
+      value: -11.1
       objectReference: {fileID: 0}
     - target: {fileID: 1263224779540128717, guid: 943b6297503f6b94785a879b6d9bf599, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3755,7 +3755,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1263224779540128717, guid: 943b6297503f6b94785a879b6d9bf599, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.7
+      value: -10.4
       objectReference: {fileID: 0}
     - target: {fileID: 1263224779540128717, guid: 943b6297503f6b94785a879b6d9bf599, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4033,11 +4033,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4816669813508104535, guid: 30935972c101d404d97bb0d18489722b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 53.9
+      value: 40.9
       objectReference: {fileID: 0}
     - target: {fileID: 4816669813508104535, guid: 30935972c101d404d97bb0d18489722b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 111.7
+      value: 111.4
       objectReference: {fileID: 0}
     - target: {fileID: 4816669813508104535, guid: 30935972c101d404d97bb0d18489722b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4440,7 +4440,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1263224779540128717, guid: 943b6297503f6b94785a879b6d9bf599, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.9
+      value: -13.4
       objectReference: {fileID: 0}
     - target: {fileID: 1263224779540128717, guid: 943b6297503f6b94785a879b6d9bf599, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4595,7 +4595,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6221162054706810212, guid: 4cde1e4cf368fe14895ac8b7f4125f54, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 45.81
+      value: 35.01
       objectReference: {fileID: 0}
     - target: {fileID: 6221162054706810212, guid: 4cde1e4cf368fe14895ac8b7f4125f54, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5103,8 +5103,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d793a5d7a10744250aad0dcf577bbe3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  finalGame: 1
-  nextLevel: 
+  finalGame: 0
+  nextLevel: End_Game
   gameText: {fileID: 787262469}
   timerText: {fileID: 338545764}
   replayButton: {fileID: 1645216346}
@@ -5282,7 +5282,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1263224779540128717, guid: 943b6297503f6b94785a879b6d9bf599, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.3
+      value: -9.8
       objectReference: {fileID: 0}
     - target: {fileID: 1263224779540128717, guid: 943b6297503f6b94785a879b6d9bf599, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7371,7 +7371,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1372348775171743733, guid: 54a5f17c7c5f24775a4e53b05b07a84d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 30.862003
+      value: 20.062
       objectReference: {fileID: 0}
     - target: {fileID: 1372348775171743733, guid: 54a5f17c7c5f24775a4e53b05b07a84d, type: 3}
       propertyPath: m_LocalPosition.z

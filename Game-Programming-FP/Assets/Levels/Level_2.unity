@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.48089564, g: 0.4705677, b: 0.43683332, a: 1}
+  m_IndirectSpecularColor: {r: 0.4808945, g: 0.47056732, b: 0.43683243, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9771,8 +9771,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d793a5d7a10744250aad0dcf577bbe3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  finalGame: 1
-  nextLevel: 
+  finalGame: 0
+  nextLevel: Level_3
   gameText: {fileID: 1411983060}
   timerText: {fileID: 289722138}
   replayButton: {fileID: 80082717}

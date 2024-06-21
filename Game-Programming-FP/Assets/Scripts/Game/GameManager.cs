@@ -117,6 +117,7 @@ public class GameManager : MonoBehaviour
             endPanel.SetActive(true);
             gameText.gameObject.SetActive(true);
             if(finalGame){
+                
                 replayButton.gameObject.SetActive(true);
                 replayButton.onClick.RemoveAllListeners();
                 replayButton.onClick.AddListener(playFromBeginning);
@@ -187,7 +188,8 @@ public class GameManager : MonoBehaviour
         Start();
     }
     void LoadNextLevel(){
-            SceneManager.LoadScene(nextLevel);
+        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(nextLevel);
     }
     public bool IsGameOver(){
         return gameEnded;

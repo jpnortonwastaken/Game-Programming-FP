@@ -7,31 +7,31 @@ public class FallingPlatform : MonoBehaviour
 {
     bool isFalling = false;
     float downSpeed = 0;
-    public Transform currentTransform;
+    public Animator animator;
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
     private void OnCollisionEnter(Collision other)
     {
         
         if (other.gameObject.name == "Player")
         {
-            Invoke("StartFalling", 3);
-            Destroy(gameObject, 5);
+            Invoke("StartRumble", 3);
+            Invoke("StartFall", 3.5f);
+            Destroy(gameObject, 4.5f);
         }
 
     }
 
-    private void Update()
+    private void StartRumble()
     {
-        if (isFalling)
-        {
-            downSpeed = 0.5f;
-            transform.position = new Vector3(transform.position.x,
-                transform.position.y - downSpeed,
-                transform.position.z);
-        }
+        animator.SetTrigger("rumbleTime");
+
+    }
+    private void StartFall()
+    {
+        animator.SetTrigger("falling");
     }
 
-    private void StartFalling()
-    {
-        isFalling = true;
-    }
 }

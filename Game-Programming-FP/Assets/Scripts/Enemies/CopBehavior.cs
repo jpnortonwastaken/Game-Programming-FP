@@ -34,6 +34,7 @@ public class CopBehavior : MonoBehaviour
     public NavMeshAgent agent;
     public Transform enemyEyes;
     public float fieldOfView = 45f;
+    public AudioClip shootingSound;
 
 
     // Start is called before the first frame update
@@ -144,6 +145,7 @@ public class CopBehavior : MonoBehaviour
         }
     }
     void Shooting(){
+        AudioSource.PlayClipAtPoint(shootingSound, transform.position);
         Instantiate(bulletPrefab, gunTip.transform.position,gunTip.transform.rotation);
     }
     private void OnDrawGizmos(){

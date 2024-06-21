@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7726961100127412432}
   - component: {fileID: 5552614279997666261}
   - component: {fileID: 6257875462186629002}
+  - component: {fileID: 7965411564663299739}
   m_Layer: 6
   m_Name: Cloud_Strato 1
   m_TagString: Untagged
@@ -119,4 +120,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1783c1097a13e4a4cade34167409bb31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentTransform: {fileID: 0}
+  animator: {fileID: 0}
+--- !u!95 &7965411564663299739
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5966400211998735161}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: dff2ab254db56974d9a251dc465cc368, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

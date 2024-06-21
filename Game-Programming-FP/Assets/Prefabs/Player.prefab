@@ -522,6 +522,7 @@ MonoBehaviour:
   dashEnable: 1
   jumpSFX: {fileID: 8300000, guid: bd5753ce621724288a6fc59180fb415a, type: 3}
   animator: {fileID: 0}
+  wingLevel: 0
   playerHeight: 2
   grounded: 0
   rotationSpeed: 10
@@ -1309,6 +1310,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 36.80969
       objectReference: {fileID: 0}
+    - target: {fileID: 9126960444528022968, guid: 188d5ce62b42d4be8bab0fdf88b6cd6b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bf2f1ff2d3a928f499ec674c5328f2f0, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 7312844608553371448, guid: 188d5ce62b42d4be8bab0fdf88b6cd6b, type: 3}

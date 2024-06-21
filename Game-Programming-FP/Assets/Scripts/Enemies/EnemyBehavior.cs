@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class EnemyBehavior : MonoBehaviour
 {
+    public AudioClip punchSound;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -12,7 +13,8 @@ public class EnemyBehavior : MonoBehaviour
             GameManager gameManager = FindObjectOfType<GameManager>();
             if (gameManager != null)
             {
-                gameManager.LoseGame();
+                AudioSource.PlayClipAtPoint(punchSound, transform.position);
+                gameManager.TakeHit();
             }
         }
         else if (other.CompareTag("Attack"))

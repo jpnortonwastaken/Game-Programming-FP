@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class FinalObjectBehavior : MonoBehaviour
 {
+    public AudioClip winSound;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +24,11 @@ public class FinalObjectBehavior : MonoBehaviour
             GameManager gameManager = FindObjectOfType<GameManager>();
             if (gameManager != null)
             {
-                gameManager.WinGame();
+                if(!gameManager.IsGameOver()){
+                      AudioSource.PlayClipAtPoint(winSound, transform.position);
+                    gameManager.WinGame();
+                }
+              
             }
         }
     }

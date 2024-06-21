@@ -22,9 +22,24 @@ public class GameManager : MonoBehaviour
     private CoinImageHandler star3Script;
     public float timeRemaining = 100; 
     public bool timerIsRunning = false;
+    private int hearts;
 
+    GameObject heart1;
+    GameObject heart2;
+    GameObject heart3;
+    public Sprite emptyHeart;
+    GameObject player;
+    public AudioClip loseSound;
+    public AudioClip hitSound;
 
     
+    void ChangeHeartImage(GameObject heart){
+        Image img1 = heart.GetComponent<Image>();
+        if (img1 != null)
+        {
+            img1.sprite = emptyHeart;
+        }
+    }
 
     void Start(){
         timerIsRunning=true;
@@ -39,8 +54,11 @@ public class GameManager : MonoBehaviour
         star1Script = star1.GetComponent<CoinImageHandler>();
         star2Script = star2.GetComponent<CoinImageHandler>();
         star3Script = star3.GetComponent<CoinImageHandler>();
-
-        
+        hearts = 3;
+       heart1 = GameObject.FindGameObjectWithTag("heart1");
+       heart2 = GameObject.FindGameObjectWithTag("heart2");
+       heart3 = GameObject.FindGameObjectWithTag("heart3");
+       player = GameObject.FindGameObjectWithTag("Player");
 
     }
 
@@ -49,7 +67,7 @@ public class GameManager : MonoBehaviour
         if(!gameEnded){
             elapsedTime += Time.deltaTime;
         }
-        if (GameObject.FindGameObjectWithTag("Player").transform.position.y < -5) {
+        if (player.transform.position.y < -5) {
             LoseGame();
         }
          if (timerIsRunning)
@@ -103,14 +121,31 @@ public class GameManager : MonoBehaviour
         {
             gameEnded = true;
             gameText.text = "You Win!";
-            LoadNextLevel();
+            Invoke("LoadNextLevel",1);
         }
+    }
+    public void TakeHit(){
+        if(hearts==3){
+            ChangeHeartImage(heart3);
+        }else if ( hearts ==2){
+            ChangeHeartImage(heart2);
+        }else if ( hearts == 1){
+            ChangeHeartImage(heart1);
+        }
+        AudioSource.PlayClipAtPoint(hitSound, player.transform.position);
+        hearts--;
+        if(hearts<=0){
+            LoseGame();
+        }
+
     }
 
     public void LoseGame()
     {
+
         if (!gameEnded)
         {
+            AudioSource.PlayClipAtPoint(loseSound, player.transform.position);
             gameEnded = true;
              Time.timeScale = 0f;
             gameText.text = "You Lose!";
@@ -128,6 +163,9 @@ public class GameManager : MonoBehaviour
         }else{
             ShowScreen();
         }
+    }
+    public bool IsGameOver(){
+        return gameEnded;
     }
 
 }

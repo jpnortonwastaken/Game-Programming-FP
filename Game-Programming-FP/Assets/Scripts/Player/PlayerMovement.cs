@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     bool readyToDash;
     GameObject wings;
     Animator wingsAnimator;
+    public bool wingLevel;
 
     KeyCode jumpKey = KeyCode.Space;
     KeyCode shiftKey = KeyCode.LeftShift;
@@ -48,8 +49,11 @@ public class PlayerMovement : MonoBehaviour
         rb.freezeRotation = true;
         rb.drag = 5f;
         rb.mass = 1f;
-        wings = GameObject.FindGameObjectWithTag("Wings");
-        wingsAnimator = wings.GetComponent<Animator>();
+        if(wingLevel){
+             wings = GameObject.FindGameObjectWithTag("Wings");
+            wingsAnimator = wings.GetComponent<Animator>();
+        }
+        
         readyToJump = true;
         doubleJump = true;
         readyToDash = true;
@@ -112,7 +116,10 @@ public class PlayerMovement : MonoBehaviour
             readyToJump = false;
             doubleJump = false;
             Jump();
-            wingsAnimator.SetInteger("Mode", 2);
+            if(wingLevel){
+                wingsAnimator.SetInteger("Mode", 2);
+            }
+           
         }
 
         if (Input.GetKeyDown(shiftKey) && readyToDash && dashEnable && !isKnockBacked && !hasDashed)
@@ -124,7 +131,10 @@ public class PlayerMovement : MonoBehaviour
 
         if (grounded)
         {
-            wingsAnimator.SetInteger("Mode", 0);
+            if(wingLevel){
+                wingsAnimator.SetInteger("Mode", 0);
+            }
+            
             doubleJump = true;
             hasDashed = false;
         }
@@ -136,9 +146,10 @@ public class PlayerMovement : MonoBehaviour
 
         if (isKnockBackedHelper)
         {
-            Invoke(nameof(ResetKnockBack), knockback);
+            Invoke(nameof(ResetKnockBack), 0.25f);
             isKnockBackedHelper = false;
             doubleJump = true;
+            hasDashed = false;
         }
     }
 
@@ -165,7 +176,7 @@ public class PlayerMovement : MonoBehaviour
     {
         GameObject gameObject = GameObject.FindGameObjectWithTag("Player");
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
-        rb.AddForce(-Camera.main.transform.forward * knockback, ForceMode.Impulse);
+        rb.AddForce(-Camera.main.transform.forward * knockback * 2, ForceMode.Impulse);
         isKnockBackedHelper = true;
     }
 

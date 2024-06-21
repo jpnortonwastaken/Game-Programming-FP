@@ -155,12 +155,13 @@ public class GameManager : MonoBehaviour
 
     public void LoseGame()
     {
+        player.GetComponent<PlayerMovement>().Death();
 
         if (!gameEnded)
         {
             AudioSource.PlayClipAtPoint(loseSound, player.transform.position);
             gameEnded = true;
-             Time.timeScale = 0f;
+            //Time.timeScale = 0f;
             gameText.text = "You Lose!";
             ShowScreen("lose");
         }

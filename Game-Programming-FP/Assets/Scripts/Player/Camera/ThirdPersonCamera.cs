@@ -15,6 +15,8 @@ public class ThirdPersonCamera : MonoBehaviour
 
     void Start()
     {
+        sensitivity = PlayerPrefs.GetFloat("sensitivity", 200f);
+
         transform.SetParent(null);
         
         if (pivot == null)

@@ -1570,6 +1570,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02c06eb04ceff47d3afa14266d690204, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  punchSound: {fileID: 8300000, guid: 026456c4f0bf84ef5bb89ec07bee889d, type: 3}
 --- !u!65 &4697595326024509528
 BoxCollider:
   m_ObjectHideFlags: 0

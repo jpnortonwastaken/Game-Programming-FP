@@ -4014,6 +4014,8 @@ MonoBehaviour:
   timeRemaining: 100
   timerIsRunning: 0
   emptyHeart: {fileID: 21300000, guid: cb1e475279330453c9f4b3c0dd99260a, type: 3}
+  loseSound: {fileID: 8300000, guid: 0a94df8c5bd2a414dbc2c81093d1b3b7, type: 3}
+  hitSound: {fileID: 8300000, guid: 9afa3df5800e94bd9b48f2e15f2af44e, type: 3}
 --- !u!4 &1721153968
 Transform:
   m_ObjectHideFlags: 0

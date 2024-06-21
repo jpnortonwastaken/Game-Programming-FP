@@ -2780,6 +2780,7 @@ MonoBehaviour:
   agent: {fileID: 0}
   enemyEyes: {fileID: 0}
   fieldOfView: 45
+  shootingSound: {fileID: 8300000, guid: 936ac63e03ba744ddb5d05353164c263, type: 3}
 --- !u!95 &1926114642777805629
 Animator:
   serializedVersion: 5

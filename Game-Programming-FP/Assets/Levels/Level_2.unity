@@ -1814,6 +1814,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8446051045429277353, guid: 68817b2d6319d4e55a1844ff6d5dac16, type: 3}
+      propertyPath: wingLevel
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9710,6 +9714,8 @@ MonoBehaviour:
   timeRemaining: 100
   timerIsRunning: 0
   emptyHeart: {fileID: 21300000, guid: cb1e475279330453c9f4b3c0dd99260a, type: 3}
+  loseSound: {fileID: 8300000, guid: 0a94df8c5bd2a414dbc2c81093d1b3b7, type: 3}
+  hitSound: {fileID: 8300000, guid: 9afa3df5800e94bd9b48f2e15f2af44e, type: 3}
 --- !u!4 &1721153968
 Transform:
   m_ObjectHideFlags: 0
@@ -9953,6 +9959,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83e63c1dde5e642289851323bd83012d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  winSound: {fileID: 0}
 --- !u!64 &1800183060
 MeshCollider:
   m_ObjectHideFlags: 0

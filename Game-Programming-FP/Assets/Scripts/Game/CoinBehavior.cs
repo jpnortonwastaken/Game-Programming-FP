@@ -7,6 +7,7 @@ public class CoinBehavior : MonoBehaviour
     public float speed = 2.0f;
     public float moveSpeed = 5.0f;
     GameManager gameManager;
+    public AudioClip pickupSound; 
     
     void Start()
     {
@@ -21,7 +22,7 @@ public class CoinBehavior : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            //lets do something here
+            AudioSource.PlayClipAtPoint(pickupSound, transform.position);
             gameManager.HandleAddStar();
             Destroy(gameObject);
         }

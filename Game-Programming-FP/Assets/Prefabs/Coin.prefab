@@ -122,3 +122,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   moveSpeed: 5
+  pickupSound: {fileID: 8300000, guid: 968746406e7ab41d6b226b32a346b2d7, type: 3}

@@ -21,7 +21,9 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip jumpSFX;
     public Animator animator;
     bool readyToDash;
-
+    GameObject wings;
+    Animator wingsAnimator;
+    public bool wingLevel;
 
     KeyCode jumpKey = KeyCode.Space;
     KeyCode shiftKey = KeyCode.LeftShift;
@@ -47,8 +49,11 @@ public class PlayerMovement : MonoBehaviour
         rb.freezeRotation = true;
         rb.drag = 5f;
         rb.mass = 1f;
-
-
+        if(wingLevel){
+             wings = GameObject.FindGameObjectWithTag("Wings");
+            wingsAnimator = wings.GetComponent<Animator>();
+        }
+        
         readyToJump = true;
         doubleJump = true;
         readyToDash = true;
@@ -111,6 +116,10 @@ public class PlayerMovement : MonoBehaviour
             readyToJump = false;
             doubleJump = false;
             Jump();
+            if(wingLevel){
+                wingsAnimator.SetInteger("Mode", 2);
+            }
+           
         }
 
         if (Input.GetKeyDown(shiftKey) && readyToDash && dashEnable && !isKnockBacked && !hasDashed)
@@ -122,6 +131,10 @@ public class PlayerMovement : MonoBehaviour
 
         if (grounded)
         {
+            if(wingLevel){
+                wingsAnimator.SetInteger("Mode", 0);
+            }
+            
             doubleJump = true;
             hasDashed = false;
         }
@@ -133,9 +146,10 @@ public class PlayerMovement : MonoBehaviour
 
         if (isKnockBackedHelper)
         {
-            Invoke(nameof(ResetKnockBack), knockback);
+            Invoke(nameof(ResetKnockBack), 0.25f);
             isKnockBackedHelper = false;
             doubleJump = true;
+            hasDashed = false;
         }
     }
 
@@ -162,7 +176,7 @@ public class PlayerMovement : MonoBehaviour
     {
         GameObject gameObject = GameObject.FindGameObjectWithTag("Player");
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
-        rb.AddForce(-Camera.main.transform.forward * knockback, ForceMode.Impulse);
+        rb.AddForce(-Camera.main.transform.forward * knockback * 2, ForceMode.Impulse);
         isKnockBackedHelper = true;
     }
 
@@ -178,15 +192,9 @@ public class PlayerMovement : MonoBehaviour
     private void Dash()
     {
         isDashing = true;
-        hasDashed = true; // Set hasDashed to true
+        hasDashed = true;
         rb.velocity = Vector3.zero;
-        rb.AddForce(cameraTransform.forward * dashForce, ForceMode.Impulse);
-        RotateToDashDirection();
-    }
-
-    private void RotateToDashDirection()
-    {
-        transform.rotation = Quaternion.LookRotation(cameraTransform.forward);
+        rb.AddForce(transform.forward * dashForce, ForceMode.Impulse);
     }
 
     private void ResetJump()

@@ -11,6 +11,10 @@ TagManager:
   - Player Look At
   - Player Model
   - GunTip
+  - Wings
+  - heart1
+  - heart2
+  - heart3
   layers:
   - Default
   - TransparentFX

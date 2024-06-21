@@ -12,7 +12,7 @@ public class EnemyBehavior : MonoBehaviour
             GameManager gameManager = FindObjectOfType<GameManager>();
             if (gameManager != null)
             {
-                gameManager.LoseGame();
+                gameManager.TakeHit();
             }
         }
         else if (other.CompareTag("Attack"))

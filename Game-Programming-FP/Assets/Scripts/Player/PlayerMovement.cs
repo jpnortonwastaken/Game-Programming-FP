@@ -141,7 +141,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyUp(jumpKey) && rb.velocity.y > 0)
         {
-            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y * 0.5f, rb.velocity.z);
+            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y * 0.1f, rb.velocity.z);
         }
 
         if (isKnockBackedHelper)

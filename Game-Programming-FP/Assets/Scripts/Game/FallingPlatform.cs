@@ -19,7 +19,7 @@ public class FallingPlatform : MonoBehaviour
         {
             Invoke("StartRumble", 3);
             Invoke("StartFall", 3.5f);
-            Destroy(gameObject, 4.5f);
+            Destroy(gameObject, 5f);
         }
 
     }

@@ -8,6 +8,10 @@ public class DynamicCloud : MonoBehaviour
     public float distance = 4;
     Vector3 startPos;
     Vector3 previousPos;
+
+    private bool playerOnCloud = false;
+    private Transform playerTransform;
+
     void Start()
     {
         startPos = transform.position;
@@ -22,6 +26,15 @@ public class DynamicCloud : MonoBehaviour
 
         transform.position = newPos;
 
+        if (playerOnCloud && !IsPlayerMoving()) 
+        {
+            playerTransform.position = new Vector3(
+                playerTransform.position.x + (transform.position.x - previousPos.x),
+                playerTransform.position.y,
+                playerTransform.position.z
+            );
+        }
+
         previousPos = transform.position;
     }
 
@@ -29,7 +42,8 @@ public class DynamicCloud : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            other.transform.parent = transform;
+            playerTransform = other.transform;
+            playerOnCloud = true;
         }
     }
 
@@ -37,7 +51,13 @@ public class DynamicCloud : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            other.transform.parent = null;
+            playerOnCloud = false;
+            playerTransform = null;
         }
+    }
+
+    private bool IsPlayerMoving()
+    {
+        return Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0;
     }
 }

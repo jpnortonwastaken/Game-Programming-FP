@@ -112,13 +112,21 @@ public class GameManager : MonoBehaviour
 
     public void ShowScreen(string input) {
         if(input == "win"){
-            gameText.color = Color.white;
+            gameText.text = "You Win!";
+            gameText.color = Color.green;
             endPanel.SetActive(true);
             gameText.gameObject.SetActive(true);
-            replayButton.gameObject.SetActive(true);
+            if(finalGame){
+                
+                replayButton.gameObject.SetActive(true);
+                replayButton.onClick.RemoveAllListeners();
+                replayButton.onClick.AddListener(playFromBeginning);
+            }
+            
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }else{
+             gameText.text = "You Lose!";
             gameText.color = Color.red;
             endPanel.SetActive(true);
             gameText.gameObject.SetActive(true);
@@ -134,7 +142,15 @@ public class GameManager : MonoBehaviour
         {
             gameEnded = true;
             gameText.text = "You Win!";
+            gameText.color = Color.green;
+            if(!finalGame){
+            
+            endPanel.SetActive(true);
+             gameText.gameObject.SetActive(true);
             Invoke("LoadNextLevel",1);
+        }else{
+            ShowScreen("win");
+        }  
         }
     }
     public void TakeHit(){
@@ -155,12 +171,13 @@ public class GameManager : MonoBehaviour
 
     public void LoseGame()
     {
+        player.GetComponent<PlayerMovement>().Death();
 
         if (!gameEnded)
         {
             AudioSource.PlayClipAtPoint(loseSound, player.transform.position);
             gameEnded = true;
-             Time.timeScale = 0f;
+            //Time.timeScale = 0f;
             gameText.text = "You Lose!";
             ShowScreen("lose");
         }
@@ -171,14 +188,14 @@ public class GameManager : MonoBehaviour
         Start();
     }
     void LoadNextLevel(){
-        if(!finalGame){
-            SceneManager.LoadScene(nextLevel);
-        }else{
-            ShowScreen("win");
-        }
+        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(nextLevel);
     }
     public bool IsGameOver(){
         return gameEnded;
+    }
+    public void playFromBeginning(){
+        SceneManager.LoadScene("Level_0");
     }
 
 }

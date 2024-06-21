@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     public Image star1;
     public Image star2;
     public Image star3;
+    public GameObject endPanel;
     private CoinImageHandler star1Script;
     private CoinImageHandler star2Script;
     private CoinImageHandler star3Script;
@@ -31,6 +32,7 @@ public class GameManager : MonoBehaviour
     GameObject player;
     public AudioClip loseSound;
     public AudioClip hitSound;
+
 
     
     void ChangeHeartImage(GameObject heart){
@@ -108,11 +110,22 @@ public class GameManager : MonoBehaviour
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
-    public void ShowScreen() {
-        gameText.gameObject.SetActive(true);
-        replayButton.gameObject.SetActive(true);
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
+    public void ShowScreen(string input) {
+        if(input == "win"){
+            gameText.color = Color.white;
+            endPanel.SetActive(true);
+            gameText.gameObject.SetActive(true);
+            replayButton.gameObject.SetActive(true);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }else{
+            gameText.color = Color.red;
+            endPanel.SetActive(true);
+            gameText.gameObject.SetActive(true);
+            replayButton.gameObject.SetActive(true);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
     }
 
     public void WinGame()
@@ -149,7 +162,7 @@ public class GameManager : MonoBehaviour
             gameEnded = true;
              Time.timeScale = 0f;
             gameText.text = "You Lose!";
-            ShowScreen();
+            ShowScreen("lose");
         }
     }
     public void ReplayGame()
@@ -161,7 +174,7 @@ public class GameManager : MonoBehaviour
         if(!finalGame){
             SceneManager.LoadScene(nextLevel);
         }else{
-            ShowScreen();
+            ShowScreen("win");
         }
     }
     public bool IsGameOver(){
